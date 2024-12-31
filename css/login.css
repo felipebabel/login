@@ -30,7 +30,7 @@ body {
   transition: opacity 0.5s ease-in-out; 
 }
 
-.login-container {
+.login-container, .register-container{
     width: 30rem; 
     height: 30rem; 
     padding: 2rem;
@@ -52,8 +52,14 @@ h2 {
     margin-bottom: 1rem;
 }
 
-.login-button {
-    margin-top: 1rem;
+p {
+  background-color: #27272a;
+  color: aliceblue;
+  margin-bottom: 1rem;
+}
+
+.login-button, .create-account-button, .register-button, .login-here-button {
+    margin-bottom: 1rem;
     padding: 1rem 2rem; 
     font-size: 1rem; 
     color: #fff;
@@ -65,7 +71,7 @@ h2 {
     text-align: center; 
   }
   
-  .login-button:hover {
+  .login-button:hover, .create-account-button:hover, .register-button:hover, .login-here-button:hover {
     background-color: #1e40af;
   }
 
@@ -85,3 +91,16 @@ h2 {
     outline: none;
     border-color: #1d4ed8; 
   }
+
+  .page-container {
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.fade-in {
+    opacity: 1;
+}
+
+.fade-out {
+    opacity: 0;
+}
