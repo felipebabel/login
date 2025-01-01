@@ -9,9 +9,12 @@ async function sendData(endpoint, payload) {
 
         const queryParams = new URLSearchParams(payload).toString();
         const url = `${backend_url}${endpoint}?${queryParams}`;
-
+        const token = generateToken(configData.SECRET_KEY);
         const response = await fetch(url, {
-            method: "POST"
+            method: "POST",
+            headers: {
+                Authorization: `Bearer ${token}`,
+              }
         });
 
         if (!response.ok) {
@@ -25,6 +28,13 @@ async function sendData(endpoint, payload) {
         console.error("Error trying to send a request to backend", error);
     }
 }
+
+ function generateToken(secretKey) {
+    const header = { alg: "HS256", typ: "JWT" };
+    const payload = { user: "developer", role: "developer", iat: Math.floor(Date.now() / 1000) };
+    const token = KJUR.jws.JWS.sign("HS256", JSON.stringify(header), JSON.stringify(payload), secretKey);
+    return token;
+  }
 
 
 document.addEventListener("DOMContentLoaded", () => {

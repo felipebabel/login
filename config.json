@@ -1,3 +1,4 @@
 {
-    "BACKEND_URL" : "http://localhost:8081"
+    "BACKEND_URL" : "http://localhost:8081",
+    "SECRET_KEY": "mySecretKeyForTesting_1234567890abcdef"
 }
