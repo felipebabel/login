@@ -23,7 +23,7 @@ async function sendData(endpoint, payload) {
 
         const result = await response.json();
         if (result.status == 'SUCCESS') {
-        window.location.href = "/login_screen.html";
+        window.location.href = "login_screen.html";
 
         }
         return result;
