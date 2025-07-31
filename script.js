@@ -13,7 +13,7 @@ async function sendData(endpoint, payload) {
         const response = await fetch(url, {
             method: "POST",
             headers: {
-                Authorization: `Bearer ${token}`,
+                Authorization: token,
               }
         });
 
@@ -22,19 +22,52 @@ async function sendData(endpoint, payload) {
         }
 
         const result = await response.json();
-        console.log("API result:", result);
+        if (result.status == 'SUCCESS') {
+        window.location.href = "/login_screen.html";
+
+        }
         return result;
     } catch (error) {
         console.error("Error trying to send a request to backend", error);
     }
 }
 
- function generateToken(secretKey) {
-    const header = { alg: "HS256", typ: "JWT" };
-    const payload = { user: "developer", role: "developer", iat: Math.floor(Date.now() / 1000) };
-    const token = KJUR.jws.JWS.sign("HS256", JSON.stringify(header), JSON.stringify(payload), secretKey);
-    return token;
+function generateToken(secretKey) {
+    const headers = {
+      'alg': 'HS256',
+      'typ': 'JWT',
+    };
+    const payload = {
+      'iss': 'developer',
+      'iat': Math.floor(Date.now() / 1000),
+      'sub': 'developer',
+      'aud': 'login'
+    };
+
+    function base64url(source) {
+        let encodedSource = CryptoJS.enc.Base64.stringify(source)
+          .replace(/=+$/, '') 
+          .replace(/\+/g, '-') 
+          .replace(/\//g, '_');
+        return encodedSource;
+      }
+
+    var stringifiedHeader = CryptoJS.enc.Utf8.parse(JSON.stringify(headers));
+    var encodedHeader = base64url(stringifiedHeader);
+   
+    var stringifiedPayload = CryptoJS.enc.Utf8.parse(JSON.stringify(payload));
+    var encodedPayload = base64url(stringifiedPayload);
+
+    var token = encodedHeader + "." + encodedPayload;
+
+    var signature = CryptoJS.HmacSHA256(token, secretKey);
+    var encodedSignature = base64url(signature);
+   
+    var signedToken = token + "." + encodedSignature;
+
+    return "Bearer " + signedToken;
   }
+
 
 
 document.addEventListener("DOMContentLoaded", () => {
