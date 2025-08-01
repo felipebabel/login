@@ -95,12 +95,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 500);
     });
 
-    document.getElementById("btn3").addEventListener("click", (event) => {
-        document.body.classList.add("fade-out");
-          setTimeout(() => {
-        window.location.href = "index.html";
-    }, 500);
-    });
+    
 
     
 });
