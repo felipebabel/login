@@ -18,13 +18,16 @@ async function sendData(endpoint, payload) {
         });
 
         if (!response.ok) {
-            throw new Error(`Error: ${response.status}`);
+          document.getElementById("error-msg").style.visibility = "visible";
+            document.getElementById("error-msg").innerText = "Invalid username or password";
         }
 
         const result = await response.json();
         if (result.status == 'SUCCESS') {
+          document.body.classList.add("fade-out");
+          setTimeout(() => {
         window.location.href = "login_screen.html";
-
+    }, 500);
         }
         return result;
     } catch (error) {
@@ -74,6 +77,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     document.getElementById("btn").addEventListener("click", (event) => {
         event.preventDefault();
+        document.getElementById("error-msg").innerText = "";
+        document.getElementById("error-msg").style.visibility = "hidden";
+
         console.log("Button clicked!");
         const payload = {
             user: document.getElementById("user").value,
@@ -81,4 +87,20 @@ document.addEventListener("DOMContentLoaded", () => {
         };
         sendData("/api/v1/login", payload);
     });
+
+    document.getElementById("btn2").addEventListener("click", (event) => {
+        document.body.classList.add("fade-out");
+          setTimeout(() => {
+        window.location.href = "register.html";
+    }, 500);
+    });
+
+    document.getElementById("btn3").addEventListener("click", (event) => {
+        document.body.classList.add("fade-out");
+          setTimeout(() => {
+        window.location.href = "index.html";
+    }, 500);
+    });
+
+    
 });

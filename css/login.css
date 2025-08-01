@@ -56,6 +56,7 @@ p {
   background-color: #27272a;
   color: aliceblue;
   margin-bottom: 1rem;
+      text-align: center; 
 }
 
 .login-button, .create-account-button, .register-button, .login-here-button {
@@ -91,4 +92,9 @@ p {
     outline: none;
     border-color: #1d4ed8; 
   }
+
+  .fade-out {
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
 
