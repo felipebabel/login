@@ -1,11 +1,9 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-    document.getElementById("btn").addEventListener("click", (event) => {
+    document.getElementById("go-back-btn").addEventListener("click", (event) => {
         document.body.classList.add("fade-out");
           setTimeout(() => {
-        window.location.href = "index.html";
+        window.location.href = "/html/user_session_summary.html";
     }, 500);
     });
-
-    
 });

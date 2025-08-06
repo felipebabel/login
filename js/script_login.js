@@ -1,6 +1,6 @@
 async function sendData(endpoint, payload) {
     try {
-        const configResponse = await fetch('config.json');
+        const configResponse = await fetch('../config.json');
         if (!configResponse.ok) {
             throw new Error(`Erro ao carregar config.json: ${configResponse.status}`);
         }
@@ -26,7 +26,7 @@ async function sendData(endpoint, payload) {
         if (result.status == 'SUCCESS') {
           document.body.classList.add("fade-out");
           setTimeout(() => {
-        window.location.href = "login_screen.html";
+        window.location.href = "user_session_summary.html";
     }, 500);
         }
         return result;

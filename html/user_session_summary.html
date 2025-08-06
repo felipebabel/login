@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Session Summary</title>
+    <link rel="stylesheet" href="../css/session_sumary.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsrsasign/10.8.2/jsrsasign-all-min.js"></script>
+
+</head>
+<body>
+    <div class="login-container">
+        <header>
+            <h2>Welcome, <span id="username">[Username]</span></h2>
+        </header>
+
+        <section class="session-summary">
+            <h3>Session Summary</h3>
+            <p><strong>User ID:</strong> <span id="user-id">[ID]</span></p>
+            <p><strong>Email:</strong> <span id="email">[email@example.com]</span></p>
+            <p><strong>Authentication Method:</strong> <span id="auth-method">[Method]</span></p>
+            <p><strong>Last Login:</strong> <span id="last-login">[Date and Time]</span></p>
+            <p><strong>IP Address:</strong> <span id="ip-address">[IP]</span></p>
+        </section>
+
+        <div class="actions">
+            <button id="reset-password-btn" type="button" class="login-button">Reset password</button>
+            <button id="logout-btn" type="button" class="login-button">Log Out</button>
+            <button id="auth-settings-btn" type="button" class="login-button">Authentication Settings</button>
+        </div>
+    </div>
+    <script src="../js/script_session_sumary.js"></script>
+
+</body>
+</html>

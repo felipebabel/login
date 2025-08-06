@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Authentication Settings</title>
+    <link rel="stylesheet" href="../css/authentication_settings.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsrsasign/10.8.2/jsrsasign-all-min.js"></script>
+
+</head>
+<body>
+    <div class="login-container">
+        <header>
+            <h3>Authentication Settings</h2>
+        </header>
+
+        <section class="session-summary">
+            <p><strong>SSO</strong> <span id="email">[email@example.com]</span></p>
+        </section>
+
+        <div class="toggle-container">
+      <span class="toggle-label"><strong>MFA</strong></span>
+      <label class="toggle-switch">
+        <input type="checkbox" id="mfa-toggle" />
+        <span class="slider"></span>
+      </label>
+    </div>
+
+        <div class="actions">
+            <button id="go-back-btn" type="button" class="login-button">Go Back</button>
+        </div>
+    </div>
+    <script src="../js/script_authentication_settings.js"></script>
+
+</body>
+</html>
