@@ -1,0 +1,54 @@
+.logs-filters {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.logs-filters input {
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.logs-filters input:focus {
+  border-color: #007bff;
+}
+
+.filter-btn, .clear-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 0 12px;
+  height: 36px; 
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.filter-btn:hover, .clear-btn:hover {
+  background-color: #0056b3;
+}
+
+.logs-section {
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* ou calc(100vh - header-height) se for tela cheia */
+}
+
+.logs-table-container {
+  width: 100%;
+  /* a tabela vai crescer conforme os registros, não precisa de overflow */
+}
+
+.logs-pagination {
+  display: flex;
+  justify-content: center;
+  padding: 1rem 0;
+  gap: 0.5rem;
+}

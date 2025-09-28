@@ -1,0 +1,331 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+* {
+  padding: 0;
+  margin: 0;
+  outline: none;
+  border: none;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body, html {
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+    height: 100%; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #18181B;
+}
+
+.dashboard-container {
+    width: 90%;
+    max-width: 1000px; 
+    height: auto; 
+    padding: 2rem;
+    background-color: #27272a;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 2px solid transparent;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    color: #f3f4f6; 
+    transition: all 0.3s ease;
+}
+
+.user-panel, .admin-panel {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.user-panel-header, .admin-panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #4b5563;
+}
+
+.user-panel-title, .admin-panel-header h1 {
+    font-size: 2.5rem;
+    font-weight: 600;
+    color: #fff;
+}
+
+.user-panel-logout-btn, .admin-panel-logout-btn {
+    padding: 0.75rem 1.5rem;
+    background-color: #dc2626;
+    color: #fff;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.user-panel-logout-btn:hover, .admin-panel-logout-btn:hover {
+    background-color: #b91c1c;
+}
+
+.user-panel-sections {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+    .user-panel-sections {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+.profile-section, .security-section, .history-section {
+    background-color: #27272a; 
+    padding: 1.5rem;
+    border-radius: 12px;
+    border: 1px solid #4b5563;
+}
+
+.section-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: #fff;
+}
+
+.profile-photo-upload {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.profile-photo {
+    width: 5rem;
+    height: 5rem;
+    border-radius: 9999px;
+    border: 2px solid #6b7280;
+    object-fit: cover;
+}
+
+.profile-upload-input {
+    color: #f3f4f6;
+    font-size: 0.875rem;
+}
+
+.profile-field label {
+    display: block;
+    font-size: 0.875rem;
+    color: #9ca3af;
+    margin-bottom: 0.25rem;
+}
+
+.profile-input, .profile-select {
+    width: 100%;
+    padding: 0.75rem;
+    border-radius: 6px;
+    background-color: #374151; 
+    color: #f3f4f6;
+    margin-top: 0.25rem;
+}
+
+.profile-save-btn {
+    width: 100%;
+    background-color: #1d4ed8;
+    color: #fff;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 1rem;
+}
+
+.profile-save-btn:hover {
+    background-color: #1e40af; 
+}
+
+.security-option h3 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.security-option p {
+    font-size: 0.875rem;
+    color: #9ca3af;
+    margin-bottom: 0.75rem;
+}
+
+.security-btn {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    color: #fff;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-align: center;
+}
+
+.green-btn {
+    background-color: #22c55e;
+}
+
+.green-btn:hover {
+    background-color: #16a34a;
+}
+
+.blue-btn {
+    background-color: #3b82f6; 
+}
+
+.blue-btn:hover {
+    background-color: #2563eb;
+}
+
+.red-btn {
+    background-color: #ef4444; 
+}
+
+.red-btn:hover {
+    background-color: #dc2626; 
+}
+
+.history-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.history-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background-color: #374151;
+    border-radius: 8px;
+    margin-bottom: 0.5rem;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.history-message {
+    font-weight: 500;
+}
+
+/* Adicione este CSS ao seu arquivo user_dashboard.css */
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 400px;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.modal-content h3 {
+  margin-top: 0;
+  color: #333;
+  font-size: 1.5rem;
+}
+
+.modal-message {
+  margin-bottom: 10px;
+  font-size: 1rem;
+  color: #555;
+}
+
+.modal-warning {
+  font-weight: bold;
+  color: #dc3545; /* Vermelho para avisos */
+  margin-bottom: 20px;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.modal-btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: transform 0.2s ease-in-out;
+}
+
+.modal-btn:hover {
+  transform: scale(1.05);
+}
+
+.yes-btn {
+  background-color: #dc3545; /* Vermelho para a ação de "sim" */
+  color: white;
+}
+
+.no-btn {
+  background-color: #6c757d; /* Cinza para a ação de "não" */
+  color: white;
+}
+
+.history-time {
+    font-size: 0.75rem;
+    color: #9ca3af;
+}
+
+.history-fail .history-message {
+    color: #ef4444; 
+}
+
+.toggle-admin-btn {
+    padding: 0.75rem 1.5rem;
+    background-color: #1d4ed8;
+    color: #fff;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 1.5rem;
+}
+
+.toggle-admin-btn:hover {
+    background-color: #1e40af;
+}
+
+.admin-placeholder {
+    font-size: 1rem;
+    color: #9ca3af;
+    text-align: center;
+    padding: 2rem;
+    border: 1px dashed #4b5563;
+    border-radius: 8px;
+    margin-top: 1rem;
+}

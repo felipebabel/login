@@ -1,0 +1,71 @@
+.language-selector-dropdown {
+  position: relative; 
+  display: inline-block;
+}
+
+.current-language-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.current-language-button img {
+  width: 25px;
+  height: auto;
+  border-radius: 3px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.language-menu {
+  position: absolute;
+  top: 100%; 
+  right: 0;
+  margin-top: 5px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+}
+
+.language-menu .menu-item {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 15px;
+  width: 100%;
+  text-align: left;
+}
+
+.language-menu .menu-item:hover,
+.language-menu .menu-item.active {
+  background-color: #f0f0f0;
+}
+
+.language-menu .menu-item img {
+  width: 20px;
+  height: auto;
+  border-radius: 2px;
+}
+
+.language-code {
+  font-size: 14px;
+  font-weight: bold;
+  color: #fff;
+}
+
+.language-name {
+  font-size: 14px;
+  font-weight: bold;
+  color: #555;
+}
