@@ -9,7 +9,6 @@ import ValidateCodeResetPassword from './components/screens/login/validateCodeRe
 import ResetPassword from './components/screens/login/resetPassword/ResetPassword';
 import Modal from "./components/common/Modal";
 import "./components/styles/base.css";
-import "./components/styles/components.css";
 
 import { HashRouter as Router, Routes, Route } from "react-router-dom";
 

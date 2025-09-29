@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import LanguageSelector from "../../../language-selector/LanguageSelector";
 import packageJson from '../../../../../package.json';
 import "./login.css";
+import { LOGIN } from "@api/endpoints";
 
 function Login({ setModalMessage }) {
   const [user, setUser] = useState("");
@@ -14,9 +15,6 @@ function Login({ setModalMessage }) {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const loginContainerRef = useRef(null);
-
-  const API_URL = "http://localhost:8080/api/v1/login";
-
   const handleLogin = async () => {
     setError('');
 
@@ -28,7 +26,7 @@ function Login({ setModalMessage }) {
     const payload = { user, password };
 
     try {
-      const response = await fetch(API_URL, {
+      const response = await fetch(LOGIN, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
@@ -62,7 +60,7 @@ return (
   <div className="container">
     <div className="main-wrapper">
       <div className="form-container" ref={loginContainerRef}>
-        <img src="/assets/image/lock.png" alt="lock image" className="lock-icon" />
+        <img src={`${import.meta.env.BASE_URL}assets/image/lock.png`} alt="lock image" className="lock-icon" />
         <h2 className="form-title">{t("loginTitle")}</h2>
         <form
           onSubmit={(e) => e.preventDefault()}
@@ -74,7 +72,7 @@ return (
             <input
               type="text"
               className="input-field"
-              placeholder={t("admin")}
+              placeholder={t("userPlaceholder")}
               value={user}
               onChange={(e) => setUser(e.target.value)}
             />
@@ -121,8 +119,8 @@ return (
     </div>
 
     <footer className="app-footer">
-      <p>Copyright © 2025 Felipe Babel. All Rights Reserved.</p>
-      <p>Version {packageJson.version}</p>
+      <p>{t("copyright")}</p>
+      <p>{t("version")} {packageJson.version}</p>
     </footer>
   </div>
 );

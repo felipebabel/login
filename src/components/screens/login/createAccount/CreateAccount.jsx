@@ -3,8 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { FaEnvelope, FaUser, FaLock, FaEye, FaEyeSlash } from "react-icons/fa";
 import './createAccount.css'
-
-const API_URL = "http://localhost:8080/api/v1/login/create-account";
+import { CREATE_ACCOUNT } from "@api/endpoints";
 
 function CreateAccount() {
   const [username, setUsername] = useState("");
@@ -12,7 +11,7 @@ function CreateAccount() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [name, setName] = useState("");
-    const [showModal, setShowModal] = useState(false); // controla janela
+    const [showModal, setShowModal] = useState(false);
 
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
@@ -60,7 +59,7 @@ function CreateAccount() {
     };
 
     try {
-      const response = await fetch(API_URL, {
+      const response = await fetch(CREATE_ACCOUNT, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

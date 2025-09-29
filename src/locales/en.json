@@ -26,6 +26,8 @@
   "resetPasswordTitle" : "Reset Password",
   "passwordErrorFieldsEmpty": "Please fill in all password fields.",
   "passwordErrorMismatch": "Passwords do not match.",
+  "copyright": "Copyright © 2025 Felipe Babel. All Rights Reserved.",
+  "version": "Version",
   "language": {
     "pt": "Portuguese",
     "en": "English",
@@ -44,10 +46,6 @@
   "registerErrorPasswordMismatch": "Passwords do not match.",
   "registerSuccess": "Account created successfully!",
   "errorServer": "Error trying to connect to backend",
-  "copyright": {
-    "text": "Copyright © {{year}} {{name}}. All Rights Reserved.",
-    "ariaLabel": "Copyright {{year}} {{name}}. All Rights Reserved."
-  },
   "dashboard": {
     "greeting": "Hello, {{name}}!",
     "logoutButton": "Logout",

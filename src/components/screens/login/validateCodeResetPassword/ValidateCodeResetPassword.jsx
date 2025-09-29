@@ -2,6 +2,7 @@ import React, { useState, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import "./validateCodeResetVerification.css";
+import { VALIDATE_CODE } from "@api/endpoints";
 
 function ValidateCodeResetPassword() {
   const [code, setCode] = useState(Array(6).fill(""));
@@ -53,14 +54,7 @@ function ValidateCodeResetPassword() {
 
     try {
       setLoading(true);
-
-      let url;
-      if (flow === "reset-password") {
-        url = `http://localhost:8080/api/v1/login/validate-code?code=${codeValue}&email=${email}`;
-      } else {
-        url = `http://localhost:8080/api/v1/login/verify-email-code?code=${codeValue}`;
-      }
-
+      const url = `${VALIDATE_CODE}?code=${codeValue}&email=${email}`;
       const response = await fetch(url, { method: "POST" });
 
       if (!response.ok) {
@@ -96,7 +90,7 @@ function ValidateCodeResetPassword() {
   return (
     <div className="main-wrapper">
       <div className="form-container">
-      <img src="/assets/image/email.png" alt="email icon" className="email-icon" />
+      <img src={`${import.meta.env.BASE_URL}assets/image/email.png`} alt="email icon" className="email-icon" />
       <h2>{t("validateCodeTitle")}</h2>
 
       {flow === "reset-password" && (

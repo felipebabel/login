@@ -44,10 +44,8 @@
   "registerErrorPasswordMismatch": "Las contraseñas no coinciden.",
   "registerSuccess": "¡Cuenta creada con éxito!",
   "errorServer": "Error al intentar conectar con el servidor",
-  "copyright": {
-    "text": "Copyright © {{year}} {{name}}. Todos los Derechos Reservados.",
-    "ariaLabel": "Derechos de Autor {{year}} {{name}}. Todos los Derechos Reservados."
-  },
+  "copyright": "Copyright © 2025 Felipe Babel. Todos los derechos reservados.",
+  "version": "Versión",
   "dashboard": {
     "greeting": "¡Hola, {{name}}!",
     "logoutButton": "Cerrar Sesión",

@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { FaEnvelope } from "react-icons/fa";
 import "./recoverPassword.css";
+import { RECOVER_PASSWORD } from "@api/endpoints";
 
 
 function RecoverPassword() {
@@ -14,7 +15,6 @@ function RecoverPassword() {
   const navigate = useNavigate();
   const { t } = useTranslation();
 
-  const API_URL = "http://localhost:8080/api/v1/login/send-email";
 
   useEffect(() => {
     let timer;
@@ -64,7 +64,7 @@ function RecoverPassword() {
     }
 
     try {
-      const result = await fetchWithLoading(API_URL, {  
+      const result = await fetchWithLoading(RECOVER_PASSWORD, {  
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -44,10 +44,8 @@
   "registerErrorPasswordMismatch": "Passwörter stimmen nicht überein.",
   "registerSuccess": "Konto erfolgreich erstellt!",
   "errorServer": "Fehler beim Versuch, eine Verbindung zum Backend herzustellen",
-  "copyright": {
-    "text": "Copyright © {{year}} {{name}}. Alle Rechte vorbehalten.",
-    "ariaLabel": "Copyright {{year}} {{name}}. Alle Rechte vorbehalten."
-  },
+  "copyright": "Copyright © 2025 Felipe Babel. Alle Rechte vorbehalten.",
+  "version": "Version",
   "dashboard": {
     "greeting": "Hallo, {{name}}!",
     "logoutButton": "Abmelden",

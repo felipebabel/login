@@ -3,6 +3,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { FaLock, FaEye, FaEyeSlash } from "react-icons/fa";
  import "./resetPassword.css";
+import { RESET_PASSWORD } from "@/api/endpoints";
+
 
 function ResetPassword() {
   const [newPassword, setNewPassword] = useState("");
@@ -14,8 +16,6 @@ function ResetPassword() {
   const location = useLocation();
   const navigate = useNavigate();
   const { t } = useTranslation();
-
-  const API_URL = "http://localhost:8080/api/v1/login/reset-password";
   const email = location.state?.email || sessionStorage.getItem("resetEmail");
   const code = location.state?.code;
 
@@ -35,7 +35,7 @@ function ResetPassword() {
     try {
       setLoading(true);
     const params = new URLSearchParams({ email, newPassword });
-    const urlWithParams = `${API_URL}?${params.toString()}`;
+    const urlWithParams = `${RESET_PASSWORD}?${params.toString()}`;
 
     const response = await fetch(urlWithParams, {
       method: "PUT",
