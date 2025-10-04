@@ -1,0 +1,57 @@
+input, .filter-btn, .save-config-btn {
+  font-size: 14px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  outline: none;
+  transition: 0.2s;
+}
+
+input {
+  padding: 8px 10px;
+  width: 150px;
+}
+
+input:focus {
+  border-color: #007bff;
+}
+
+.config-tab-section { 
+  margin-top: 1rem;
+  margin-left: 1rem;
+}
+
+.config-item label {
+    font-weight: 500;
+    color: #f3f4f6;
+    white-space: nowrap; 
+    flex-shrink: 0;
+    min-width: 20rem; 
+    text-align: left;
+}
+
+.config-item {
+  width: 50%;
+      margin: 15px 0;
+    margin-top: 1rem;
+    display: flex;
+    align-items: center; 
+    gap: 1.5rem; 
+    padding: 1.2rem 1.5rem;
+    border-radius: 10px;
+    background-color: #2e2e33; 
+}
+
+.filter-btn, .save-config-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px; 
+  padding: 8px 12px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+.filter-btn:hover, .save-config-btn:hover {
+  background-color: #0056b3;
+}

@@ -1,0 +1,12 @@
+.logs-table-container {
+  flex: 1; 
+  overflow-y: auto; 
+  margin-right: 1rem;
+}
+
+.logs-section {
+  min-height: 500px; 
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}

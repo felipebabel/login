@@ -1,0 +1,271 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+* {
+  padding: 0;
+  margin: 0;
+  outline: none;
+  border: none;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body, html {
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Poppins', sans-serif;
+  background-color: #18181B;
+  color: #f3f4f6;
+}
+
+/* --- Profile Section --- */
+.profile-section {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 2rem;
+}
+
+.section-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.profile-fields {
+    max-width: 55rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3rem;
+}
+
+.profile-field {
+  max-width: 20rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-field label {
+  font-size: 0.875rem;
+    max-width: 25rem;
+
+  color: #9ca3af;
+  text-align: left;
+}
+
+.profile-input,
+.profile-select {
+  width: 100%;
+  border-radius: 0;
+  max-width: 25rem;
+padding: 0.5rem 0;   
+border: none; 
+  border-bottom: 2px solid #3f3f46; 
+  background: transparent;      
+  color: #f3f4f6;
+  transition: all 0.3s ease;
+}
+
+.profile-select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="white"><polygon points="0,0 12,0 6,6"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 12px 12px;
+  cursor: pointer;
+}
+
+.profile-save-btn {
+  max-width: 20rem;
+  padding: 0.75rem 2rem;
+  background-color: #1d4ed8;
+  color: #fff;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-bottom: 2rem;
+  transition: background-color 0.3s ease;
+}
+
+.profile-save-btn:hover {
+  background-color: #2563eb;
+}
+
+/* --- Botões coloridos genéricos --- */
+.green-btn {
+  background-color: #22c55e;
+  color: #fff;
+  padding: 0.75rem 2rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.green-btn:hover {
+  background-color: #16a34a;
+}
+
+.blue-btn {
+  background-color: #3b82f6;
+  color: #fff;
+  padding: 0.75rem 2rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.blue-btn:hover {
+  background-color: #2563eb;
+}
+
+.red-btn {
+  background-color: #ef4444;
+  color: #fff;
+  padding: 0.75rem 2rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.red-btn:hover {
+  background-color: #dc2626;
+}
+
+/* --- Histórico / Activity Log --- */
+.history-list,
+.log-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.history-item,
+.log-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background-color: #374151;
+  border-radius: 8px;
+  margin-bottom: 0.5rem;
+}
+
+.history-message,
+.log-message {
+  font-weight: 500;
+}
+
+.history-time,
+.log-time {
+  font-size: 0.75rem;
+  color: #9ca3af;
+}
+
+/* Status logs */
+.log-success .log-status {
+  color: #22c55e;
+}
+
+.log-fail .log-status,
+.history-fail .history-message {
+  color: #ef4444;
+}
+
+.admin-placeholder {
+  font-size: 1rem;
+  color: #9ca3af;
+  text-align: center;
+  padding: 2rem;
+  border: 1px dashed #4b5563;
+  border-radius: 8px;
+  margin-top: 1rem;
+}
+
+/* --- Alerts --- */
+.custom-alert {
+  margin-top: 1rem;
+}
+
+/* --- Modal --- */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: #27272a;
+  color: #ccc;
+  padding: 2.5rem 2rem;
+  border-radius: 12px;
+  width: 360px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  text-align: center;
+}
+
+.modal-content h3 {
+  margin-top: 0;
+  color: #fff;
+  font-size: 1.5rem;
+}
+
+.modal-message {
+  margin-bottom: 10px;
+  font-size: 1rem;
+  color: #ccc;
+}
+
+.modal-warning {
+  font-weight: bold;
+  color: #dc3545;
+  margin-bottom: 20px;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+@media (min-width: 768px) {
+  .profile-fields {
+    grid-template-columns: repeat(2, 1fr);
+    justify-content: start;
+    gap: 0.75rem 1rem;
+  }
+}
+
+
+.modal-btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: transform 0.2s ease-in-out;
+}
+
+.yes-btn {
+  background-color: #dc3545;
+  color: white;
+}
+
+.no-btn {
+  background-color: #6c757d;
+  color: white;
+}

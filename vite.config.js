@@ -10,6 +10,7 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
       '@login': path.resolve(__dirname, './src/components/screens/login'),
       '@api': path.resolve(__dirname, './src/api'),
+      '@root': path.resolve(__dirname, './'),
     },
   },
 });

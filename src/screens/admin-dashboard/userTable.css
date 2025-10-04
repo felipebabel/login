@@ -1,0 +1,115 @@
+.admin-users-table {
+    width: 100%; 
+    table-layout: fixed; 
+}
+
+.admin-users-table th,
+.admin-users-table td {
+  line-height: 1; 
+    text-align: left;
+}
+
+.admin-users-table th:nth-child(1),
+.admin-users-table td:nth-child(1) {
+    width: 10%; 
+}
+
+.admin-users-table th:nth-child(2),
+.admin-users-table td:nth-child(2) {
+    width: 10%; 
+}
+
+.admin-users-table th:nth-child(3),
+.admin-users-table td:nth-child(3) {
+    width: 35%; 
+}
+
+.admin-users-table th:nth-child(4),
+.admin-users-table td:nth-child(4) {
+    width: 15%; 
+}
+
+.admin-users-table th:nth-child(5),
+.admin-users-table td:nth-child(5) {
+    width: 15%;
+}
+
+.admin-users-table th:nth-child(6),
+.admin-users-table td:nth-child(6) {
+    width: 15%;
+}
+
+.admin-users-table td {
+    white-space: nowrap; 
+    overflow: hidden;
+    text-overflow: ellipsis; 
+}
+
+
+.admin-users-table {
+  margin-top: 0.5rem;
+  width: 100%;
+    table-layout: fixed; 
+  border-collapse: collapse;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.admin-users-table thead {
+  background-color: #1f2937; 
+  max-height: 2.5rem;
+  color: #f3f4f6;
+}
+
+.admin-users-table tbody tr {
+  border-bottom: 1px solid #4b5563;
+  transition: background-color 0.2s ease;
+}
+
+.admin-users-table tbody tr.even {
+  background-color: #27272a; 
+}
+
+.admin-users-table tbody tr.odd {
+  background-color: #1f2937; 
+}
+
+.admin-users-table tbody tr:hover {
+  background-color: #3b82f6; 
+  color: #fff;
+}
+
+.admin-users-table th {
+  padding: 1rem 20px;  
+  height: 3rem;           
+  line-height: 1.2;        
+  vertical-align: middle; 
+  white-space: nowrap;     
+  overflow: hidden;       
+  text-overflow: ellipsis; 
+  font-weight: 300;
+}
+
+
+.admin-users-table td button {
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-right: 0.5rem;
+  color: #fff;
+  background-color: #22c55e;
+}
+
+.admin-users-table td button.red-btn {
+  background-color: #ef4444;
+}
+
+.admin-users-table td button.green-btn:hover {
+  background-color: #16a34a;
+}
+
+.admin-users-table td button.red-btn:hover {
+  background-color: #dc2626;
+}

@@ -1,0 +1,129 @@
+input, .filter-btn,  .reset-password-btn, .delete-config-btn {
+  font-size: 14px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  outline: none;
+  transition: 0.2s;
+}
+
+.config-tab-section { 
+  margin-top: 1rem;
+}
+
+.config-item-user    label {
+    font-weight: 500;
+    color: #f3f4f6;
+    white-space: nowrap; 
+    flex-shrink: 0;
+    min-width: 20rem; 
+    text-align: left;
+}
+
+.config-item-user label:nth-of-type(2) {
+  min-width: 30rem;
+}
+
+.delete-account-button {
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-align: center;
+    color: #fff;
+      background-color: #dc2626;
+}
+
+.cancel-button {
+    display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 8px 12px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-align: center;
+    background-color: #6b7280; 
+    color: #fff;
+}
+.gray-btn:hover {
+  background-color: #4b5563;
+}
+
+.blue-btn {
+    margin-top: 1rem;
+        display: flex;
+  align-items: center;
+  gap: 5px;
+padding: 12px 16px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-align: center;
+    color: #fff;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+}
+
+/* Botão cinza (Cancelar) */
+.no-btn {
+    margin-top: 1rem;
+  background-color: #6b7280;
+  color: #fff;
+  border: none;
+      display: flex;
+  align-items: center;
+  gap: 5px;
+padding: 12px 16px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-align: center;
+    color: #fff;
+}
+
+.config-item-user {
+    width: 60%;
+    margin: 15px 0;
+    margin-top: 1rem;
+    display: flex;
+    align-items: center; 
+    gap: 1.5rem; 
+    padding: 1.2rem 1.5rem;
+    border-radius: 10px;
+    background-color: #2e2e33; 
+}
+
+.filter-btn, .reset-password-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px; 
+  padding: 8px 12px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+.delete-config-btn {
+      display: flex;
+  align-items: center;
+  gap: 5px; 
+  padding: 8px 12px;
+      background-color: #b91c1c;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+.delete-config-btn:hover {
+      background-color: #ef4444; 
+}
+
+.filter-btn:hover,  .reset-password-btn:hover {
+  background-color: #0056b3;
+}

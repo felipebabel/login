@@ -1,0 +1,47 @@
+
+.logs-section {
+    margin-top: 1rem;
+  display: flex;
+  max-height: 50%;
+  flex-direction: column;
+      margin: 15px 0;
+}
+
+.logs-table-container {
+    flex: 1;
+    overflow-y: auto; 
+    position: relative; 
+}
+
+.users-filters {
+display: flex;
+  align-items: center;  
+  gap: 1rem; 
+}
+
+.logs-pagination {
+    flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+    padding: 10px 0;
+    margin-top: auto; 
+    position: absolute; 
+    bottom: 0; 
+    left: 0;
+    right: 0;    
+    flex-shrink: 0; 
+    display: flex;
+    justify-content: center;    
+    padding: 10px 0;
+    background-color: #27272a; 
+    z-index: 5;
+}
+
+.admin-panel-content {
+    flex: 1; 
+    display: flex; 
+    min-height: 500px;
+    flex-direction: column; 
+    overflow: hidden; 
+    padding-bottom: 2rem; 
+}

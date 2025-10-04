@@ -1,14 +1,14 @@
-import { useState } from "react"; 
-import Login from "./components/screens/login/login/Login";
-import CreateAccount from "./components/screens/login/createAccount/CreateAccount";
-import UserDashboard from './components/user-dashboard/UserDashboard';
-import AdminDashboard from './components/admin-dashboard/AdminDashboard';
-import RecoverPassword from './components/screens/login/recoverPassword/RecoverPassword';
-import ValidateCodeEmailVerification from './components/screens/login/validateCodeEmailVerification/ValidateCodeEmailVerification';
-import ValidateCodeResetPassword from './components/screens/login/validateCodeResetPassword/ValidateCodeResetPassword';
-import ResetPassword from './components/screens/login/resetPassword/ResetPassword';
+import { useState } from "react";
+import Login from "./screens/login/login/Login";
+import CreateAccount from "./screens/login/createAccount/CreateAccount";
+import UserDashboard from './screens/user-dashboard/UserDashboard';
+import AdminDashboard from './screens/admin-dashboard/AdminDashboard';
+import RecoverPassword from './screens/login/recoverPassword/RecoverPassword';
+import ValidateCodeEmailVerification from './screens/login/validateCodeEmailVerification/ValidateCodeEmailVerification';
+import ValidateCodeResetPassword from './screens/login/validateCodeResetPassword/ValidateCodeResetPassword';
+import ResetPassword from './screens/login/resetPassword/ResetPassword';
 import Modal from "./components/common/Modal";
-import "./components/styles/base.css";
+import "./styles/base.css";
 
 import { HashRouter as Router, Routes, Route } from "react-router-dom";
 
