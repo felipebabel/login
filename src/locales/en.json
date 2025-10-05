@@ -198,7 +198,7 @@
     "errorInvalid": "Invalid username or password.",
     "errorEmpty": "Please fill in all fields.",
     "errorServer": "An error occurred. Please try again later.",
-    "copyright": "© All rights reserved",
+    "copyright": "Copyright © 2025 Felipe Babel. All Rights Reserved.",
     "version": "Version"
   },
   "recoverPassword": {
@@ -248,5 +248,31 @@
     "didntGet": "Didn't receive the code?",
     "clickResend": "Click here to resend the code",
     "verify": "Verify Code"
-  }
+  },
+  "profileModal": {
+      "userProfile": "User Profile",
+      "identifier": "Identifier",
+      "name": "Name",
+      "email": "Email",
+      "role": "Role",
+      "status": "Status",
+      "language": "Language",
+      "phone": "Phone",
+      "address": "Address",
+      "addressComplement": "Address Complement",
+      "city": "City",
+      "state": "State",
+      "country": "Country",
+      "zipCode": "Zip Code",
+      "creationDate": "Creation Date",
+      "lastAccessDate": "Last Access Date",
+      "loginDate": "Login Date",
+      "passwordChangeDate": "Password Change Date",
+      "forcePasswordChange": "Force Password Change",
+      "loginAttempt": "Login Attempt",
+      "updateDate": "Update Date",
+      "gender": "Gender",
+      "yes": "Yes",
+      "no": "No"
+    }
 }

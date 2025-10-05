@@ -363,6 +363,7 @@ const handleMenuOptionClick = async (option, user) => {
         open={profileModalOpen} 
         onClose={() => setProfileModalOpen(false)} 
         data={profileData} 
+        t={t}
       />
       <div className="admin-panel">
         <div className="admin-panel-header">
