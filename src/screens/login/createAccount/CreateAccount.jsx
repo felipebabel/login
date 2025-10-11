@@ -17,20 +17,9 @@ function CreateAccount() {
   const [success, setSuccess] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
-
-  const fetchWithLoading = async (url, options = {}) => {
-    try {
-      setLoading(true);
-      const response = await fetch(url, options);
-      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-      if (response.status === 204) return null;
-      return await response.json();
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const validateEmail = (email) => {
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -71,18 +60,23 @@ function CreateAccount() {
       language: languageMap[i18n.language] || "ENGLISH",
     };
 
+    setLoading(true);
     try {
-      const result = await fetchWithLoading(CREATE_ACCOUNT, {
+      const response = await fetch(CREATE_ACCOUNT, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
 
+      if (!response.ok) {
+        setError(t("register.errorServer"));
+        return;
+      }
+
+      const result = await response.json();
+
       if (result.status === "Success") {
         console.log("Registration successful:", result.message);
-        setError("");
         setShowModal(true);
         setUsername("");
         setEmail("");
@@ -92,12 +86,12 @@ function CreateAccount() {
       } else {
         setError(t("register.errorServer"));
         console.error("Registration failed:", result.message);
-        setSuccess("");
       }
-    } catch (error) {
-      console.error("Network or fetch error:", error);
+    } catch (err) {
+      console.error("Network or fetch error:", err);
       setError(t("register.errorServer"));
-      setSuccess("");
+    } finally {
+      setLoading(false);
     }
   };
 

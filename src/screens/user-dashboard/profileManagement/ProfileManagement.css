@@ -12,7 +12,8 @@ html {
   scroll-behavior: smooth;
 }
 
-body, html {
+body,
+html {
   overflow-x: hidden;
   margin: 0;
   padding: 0;
@@ -40,7 +41,7 @@ body, html {
 }
 
 .profile-fields {
-    max-width: 55rem;
+  max-width: 55rem;
   display: grid;
   grid-template-columns: 1fr;
   gap: 3rem;
@@ -54,7 +55,7 @@ body, html {
 
 .profile-field label {
   font-size: 0.875rem;
-    max-width: 25rem;
+  max-width: 25rem;
 
   color: #9ca3af;
   text-align: left;
@@ -65,10 +66,10 @@ body, html {
   width: 100%;
   border-radius: 0;
   max-width: 25rem;
-padding: 0.5rem 0;   
-border: none; 
-  border-bottom: 2px solid #3f3f46; 
-  background: transparent;      
+  padding: 0.5rem 0;
+  border: none;
+  border-bottom: 2px solid #3f3f46;
+  background: transparent;
   color: #f3f4f6;
   transition: all 0.3s ease;
 }

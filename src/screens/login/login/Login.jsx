@@ -1,58 +1,33 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { FaInfoCircle, FaUser, FaLock, FaEye, FaEyeSlash } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import i18n from "i18next";
 import LanguageSelector from "@/components/language-selector/LanguageSelector";
 import packageJson from "@root/package.json";
 import "./login.css";
-import { LOGIN } from "@api/endpoints";
+import { LOGIN, GET_USER } from "@api/endpoints";
 import LoadingOverlay from "@/components/loading/LoadingOverlay";
+import { authService } from "@/components/auth/AuthService";
 
-function Login({ setModalMessage }) {
+function Login() {
   const [user, setUser] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const navigate = useNavigate();
-  const [showModal, setShowModal] = useState(false);
-  const { t } = useTranslation();
-  const loginContainerRef = useRef(null);
   const [loading, setLoading] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
-  const fetchWithLoading = async (url, options = {}) => {
-    try {
-      setLoading(true);
-      const response = await fetch(url, options);
-      if (!response.ok) {
-        const errorData = await response.json();
-        if (errorData.message === "Password expired") {
-          sessionStorage.setItem("user", user);
-          setShowModal(true);
-        } else {
-          setError(t("login.errorInvalid"));
-        }
-        return;
-      }
-      const data = await response.json();
+  const navigate = useNavigate();
+  const loginContainerRef = useRef(null);
+  const { t } = useTranslation();
 
-      if (data?.username != null) {
-        const dashboardPath =
-          data.role === "ADMIN" || data.role === "ANALYST"
-            ? "/admin-dashboard"
-            : "/user-dashboard";
-
-        navigate(dashboardPath, {
-          state: {
-            userName: data.username,
-            userRole: data.role,
-            userIdentifier: data.identifier,
-          },
-        });
-      }
-    } finally {
-      setLoading(false);
-    }
-  };
+  const [lang, setLang] = useState(i18n.language);
+  useEffect(() => {
+    const handleLanguageChange = () => setLang(i18n.language);
+    i18n.on("languageChanged", handleLanguageChange);
+    return () => i18n.off("languageChanged", handleLanguageChange);
+  }, []);
 
   const handleLogin = async () => {
     setError("");
@@ -62,16 +37,63 @@ function Login({ setModalMessage }) {
       return;
     }
 
-    const payload = { user, password };
-
+    setLoading(true);
     try {
-      return await fetchWithLoading(LOGIN, {
+      const payload = { user, password };
+      const response = await fetch(LOGIN, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${localStorage.getItem("jwtToken")}`,
+        },
         body: JSON.stringify(payload),
       });
-    } catch (error) {
+
+      if (!response.ok) {
+        setError(t("login.errorInvalid"));
+        return;
+      }
+
+      const data = await response.json();
+      authService.setTokens({
+        token: data.token,
+        refreshToken: data.refreshToken,
+        expiresIn: data.expiresIn,
+      });
+      localStorage.setItem("jwtToken", data.token);
+      const userResponse = await authService.apiClient(`${GET_USER}?username=${user}`);
+
+      if (!userResponse.ok) {
+        const errData = await userResponse.json();
+        if (errData.message === "Password expired") {
+          sessionStorage.setItem("user", JSON.stringify(errData));
+          setShowModal(true);
+        } else {
+          setError(t("login.errorInvalid"));
+        }
+        return;
+      }
+
+      const userData = await userResponse.json();
+      if (userData?.username) {
+        const dashboardPath =
+          userData.role === "ADMIN" || userData.role === "ANALYST"
+            ? "/admin-dashboard"
+            : "/user-dashboard";
+
+        navigate(dashboardPath, {
+          state: {
+            userName: userData.username,
+            userRole: userData.role,
+            userIdentifier: userData.identifier,
+          },
+        });
+      }
+    } catch (err) {
+      console.error(err);
       setError(t("login.errorServer"));
+    } finally {
+      setLoading(false);
     }
   };
 

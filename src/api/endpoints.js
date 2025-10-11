@@ -14,3 +14,22 @@ export const GET_LOGS = `${API_BASE_URL}/api/v1/admin/get-logs`;
 export const UPDATE_ACCOUNT = `${API_BASE_URL}/api/v1/login/update-account`;
 export const GET_ACCOUNT_MONTH = `${API_BASE_URL}/api/v1/admin/get-new-account-month`;
 
+// ADMIN DASH
+export const GET_TOTAL_ACCOUNT = `${API_BASE_URL}/api/v1/admin/get-total-account`;
+export const GET_PENDING_ACCOUNT = `${API_BASE_URL}/api/v1/admin/get-pending-account`;
+export const GET_BLOCKED_ACCOUNT = `${API_BASE_URL}/api/v1/admin/get-blocked-account`;
+export const GET_ACTIVE_ACCOUNT = `${API_BASE_URL}/api/v1/admin/get-active-account`;
+export const GET_INACTIVE_ACCOUNT = `${API_BASE_URL}/api/v1/admin/get-inactive-account`;
+export const GET_ACTIVE_SESSIONS = `${API_BASE_URL}/api/v1/admin/get-active-sessions`;
+
+export const REFRESH = `${API_BASE_URL}/api/v1/auth/refresh`;
+
+
+// TODO
+export const BLOCK_USER = `${API_BASE_URL}/api/v1/admin/get-users`;
+export const ACTIVATE_USER = `${API_BASE_URL}/api/v1/admin/get-users`;
+export const INACTIVATE_USER = `${API_BASE_URL}/api/v1/admin/get-users`;
+export const GIVE_ANALYST_ROLE = `${API_BASE_URL}/api/v1/admin/get-users`;
+export const FORCE_PASSWORD_CHANGE = `${API_BASE_URL}/api/v1/admin/get-users`;
+export const FORCE_LOGOUT = `${API_BASE_URL}/api/v1/admin/get-users`;
+export const GET_USERS = `${API_BASE_URL}/api/v1/admin/get-users`;

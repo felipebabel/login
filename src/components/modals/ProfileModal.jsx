@@ -25,7 +25,7 @@ const ProfileModal = ({ open, onClose, data, t }) => {
           &times;
         </button>
         <h2>{t("profileModal.userProfile")}: {data.username}</h2>
-        <div className="profile-fields">
+        <div className="profile-fields-modal">
           <p><strong>{t("profileModal.identifier")}:</strong> {data.identifier}</p>
           <p><strong>{t("profileModal.name")}:</strong> {data.name}</p>
           <p><strong>{t("profileModal.email")}:</strong> {data.email}</p>

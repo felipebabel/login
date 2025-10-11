@@ -23,7 +23,7 @@
   text-align: center;
 }
 
-.profile-fields {
+.profile-fields-modal {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   column-gap: 40px;
@@ -33,7 +33,7 @@
   width: 90%; 
 }
 
-.profile-fields p {
+.profile-fields-modal p {
   margin: 4px 0;
   line-height: 1.4;
   text-align: left; 

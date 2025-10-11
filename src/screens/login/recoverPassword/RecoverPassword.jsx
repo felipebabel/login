@@ -19,32 +19,13 @@ function RecoverPassword() {
     let timer;
     if (success && countdown > 0) {
       timer = setInterval(() => {
-        setCountdown((prevCountdown) => prevCountdown - 1);
+        setCountdown((prev) => prev - 1);
       }, 1000);
-    } else if (countdown === 0) {
+    } else if (countdown === 0 && success) {
       setSuccess(t("recoverPassword.tokenExpired"));
     }
     return () => clearInterval(timer);
   }, [success, countdown, t]);
-
-  const fetchWithLoading = async (url, options = {}) => {
-    try {
-      setLoading(true);
-      const params = new URLSearchParams({ email: email });
-
-      const urlWithParams = `${url}?${params.toString()}`;
-      const response = await fetch(urlWithParams, options);
-      if (response.status === 404) {
-        setError(t("recoverPassword.errorNotFoundUser"));
-        return null;
-      }
-      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-      if (response.status === 204) return { success: true };
-      return await response.json();
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const handleSendLink = async () => {
     setError("");
@@ -62,20 +43,39 @@ function RecoverPassword() {
       return;
     }
 
+    setLoading(true);
     try {
-      const result = await fetchWithLoading(RECOVER_PASSWORD, {
+      const params = new URLSearchParams({ email });
+      const response = await fetch(`${RECOVER_PASSWORD}?${params.toString()}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ email }),
       });
-      if (result?.success) {
+
+      if (response.status === 404) {
+        setError(t("recoverPassword.errorNotFoundUser"));
+        return;
+      }
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      if (response.status === 204) {
         navigate("/validate-code-password", { state: { email } });
+      } else {
+        const data = await response.json();
+        if (data?.success) {
+          navigate("/validate-code-password", { state: { email } });
+        }
       }
     } catch (err) {
       console.error("API error:", err);
       setError(t("recoverPassword.errorServer"));
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -105,30 +105,8 @@ function RecoverPassword() {
               onChange={(e) => setEmail(e.target.value)}
             />
           </div>
-          {error && (
-            <p
-              style={{
-                color: "red",
-                textAlign: "center",
-                marginBottom: "1rem",
-                marginTop: "1rem",
-              }}
-            >
-              {error}
-            </p>
-          )}
-          {success && (
-            <p
-              style={{
-                color: "green",
-                textAlign: "center",
-                marginBottom: "1rem",
-                marginTop: "1rem",
-              }}
-            >
-              {success}
-            </p>
-          )}
+          {error && <p style={{ color: "red", textAlign: "center", margin: "1rem 0" }}>{error}</p>}
+          {success && <p style={{ color: "green", textAlign: "center", margin: "1rem 0" }}>{success}</p>}
           <button
             type="button"
             className="btn btn-primary"
@@ -140,9 +118,7 @@ function RecoverPassword() {
         </form>
         <p className="form-link">
           {t("recoverPassword.rememberPassword")}{" "}
-          <span onClick={handleBackToLogin}>
-            {t("recoverPassword.backToLoginButton")}
-          </span>
+          <span onClick={handleBackToLogin}>{t("recoverPassword.backToLoginButton")}</span>
         </p>
       </div>
     </div>

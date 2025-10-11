@@ -1,19 +1,24 @@
 import React, { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
 import {
   PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer,
   BarChart, Bar, XAxis, YAxis, CartesianGrid
 } from "recharts";
 import "./ChartTab.css";
-import { GET_ACCOUNT_MONTH } from "@api/endpoints";
+import { GET_ACCOUNT_MONTH, GET_TOTAL_ACCOUNT } from "@api/endpoints";
 
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#AA336A"];
+import { authService } from "@/components/auth/AuthService";
 
-const ChartTab = ({ totals }) => {
-  const { t } = useTranslation();
+const ChartTab = ({ t }) => {
   const [activeTab, setActiveTab] = useState("status");
   const [usersPerMonth, setUsersPerMonth] = useState([]);
   const [loginAttemptsPerDay, setLoginAttemptsPerDay] = useState([]);
+  const [localTotals, setLocalTotals] = useState({
+    totalActive: 0,
+    totalInactive: 0,
+    totalPending: 0,
+    totalBlocked: 0
+  });
 
   useEffect(() => {
     setLoginAttemptsPerDay([
@@ -27,20 +32,37 @@ const ChartTab = ({ totals }) => {
     ]);
   }, []);
 
+  const fetchTotals = async () => {
+    try {
+      const data = await authService.apiClient(GET_TOTAL_ACCOUNT);
+      const response = await data.json();
+      setLocalTotals({
+        totalActive: response.totalActive,
+        totalInactive: response.totalInactive,
+        totalPending: response.totalPending,
+        totalBlocked: response.totalBlocked
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchTotals();
+  }, []);
+
   useEffect(() => {
     const fetchNewAccounts = async () => {
       try {
-        const response = await fetch(GET_ACCOUNT_MONTH);
+        const response = await authService.apiClient(GET_ACCOUNT_MONTH);
         const data = await response.json();
-
         const formatted = data.map(item => ({
           month: `${new Date(item.year, item.month - 1).toLocaleString('default', { month: 'short' })}/${item.year}`,
           count: item.totalUsers
         }));
-
         setUsersPerMonth(formatted);
       } catch (error) {
-        console.error("Erro ao buscar novos usuários:", error);
+        console.error("Error searching for new users:", error);
       }
     };
 
@@ -50,10 +72,10 @@ const ChartTab = ({ totals }) => {
   }, [activeTab]);
 
   const pieData = [
-    { name: t("adminDashboard.totalActive"), value: totals.totalActive },
-    { name: t("adminDashboard.totalInactive"), value: totals.totalInactive },
-    { name: t("adminDashboard.totalPending"), value: totals.totalPending },
-    { name: t("adminDashboard.totalBlocked"), value: totals.totalBlocked },
+    { name: t("adminDashboard.totalActive"), value: localTotals.totalActive },
+    { name: t("adminDashboard.totalInactive"), value: localTotals.totalInactive },
+    { name: t("adminDashboard.totalPending"), value: localTotals.totalPending },
+    { name: t("adminDashboard.totalBlocked"), value: localTotals.totalBlocked },
   ];
 
   return (
@@ -141,12 +163,13 @@ const ChartTab = ({ totals }) => {
         {activeTab === "loginAttempts" && (
           <div className="chart-wrapper">
             <ResponsiveContainer width="80%" height={400}>
-              <BarChart data={loginAttemptsPerDay} margin={{ top: 50, right: 30, left: 40, bottom: 10 }} tooltip={false}>
+              <BarChart data={loginAttemptsPerDay} margin={{ top: 50, right: 30, left: 40, bottom: 10 }}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="date" />
                 <YAxis />
+                <Tooltip />
                 <Legend />
-                <Bar dataKey="count" fill="#FF8042" cursor={{ fill: "transparent" }} />
+                <Bar dataKey="count" fill="#FF8042" cursor="pointer" />
               </BarChart>
             </ResponsiveContainer>
           </div>

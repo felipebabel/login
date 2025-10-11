@@ -1,0 +1,28 @@
+.totals-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 16px;
+  margin: 15px 1rem;
+}
+
+.total-card {
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 16px;
+  text-align: center;
+  font-weight: 520;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.total-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.total-all { border-left: 4px solid #007bff; color: #007bff; }
+.total-active { border-left: 4px solid #28a745; color: #28a745; }
+.total-inactive { border-left: 4px solid #6c757d; color: #6c757d; }
+.total-pending { border-left: 4px solid #ffc107; color: #ffc107; }
+.total-blocked { border-left: 4px solid #dc3545; color: #dc3545; }
+.total-active-session { border-left: 4px solid #22c55e; color: #22c55e; }

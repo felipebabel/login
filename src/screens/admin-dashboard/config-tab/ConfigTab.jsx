@@ -1,30 +1,41 @@
 import React, { useState, useEffect } from "react";
 import "./ConfigTab.css";
-import { GET_CONFIG } from "@api/endpoints";
-import { SET_CONFIG } from "@api/endpoints";
+import { GET_CONFIG, SET_CONFIG } from "@api/endpoints";
+import { authService } from "@/components/auth/AuthService";
 
-const ConfigTab = ({ t, userRole, userIdentifier: propUserIdentifier, fetchWithLoading, setCustomAlert }) => {
+const ConfigTab = ({ t, userRole, userIdentifier: propUserIdentifier, setCustomAlert }) => {
   const [passwordExpiryDays, setPasswordExpiryDays] = useState(90);
   const [tokenSessionExpiration, setTokenSessionExpiration] = useState(10);
-  const [userIdentifier, setUserIdentifier] = useState(propUserIdentifier || location.state?.userIdentifier || null);
+  const [userIdentifier] = useState(propUserIdentifier || location.state?.userIdentifier || null);
 
   useEffect(() => {
     const fetchPasswordExpiry = async () => {
       try {
-        const data = await fetchWithLoading(
-          `${GET_CONFIG}?configDescription=passwordExpiryDays`
-        );
+        const response = await authService.apiClient(`${GET_CONFIG}?configDescription=passwordExpiryDays`, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        const data = await response.json();
+
         setPasswordExpiryDays(Number(data?.value || 90));
       } catch (err) {
         console.error(err);
+        setCustomAlert({ show: true, message: t("adminDashboard.configuration.errorMessageLoadPasswordExpiry") });
       }
+
       try {
-        const data = await fetchWithLoading(
-          `${GET_CONFIG}?configDescription=tokenSessionExpiration`
-        );
+        const response = await authService.apiClient(`${GET_CONFIG}?configDescription=tokenSessionExpiration`, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        const data = await response.json();
+
         setTokenSessionExpiration(Number(data?.value || 10));
       } catch (err) {
         console.error(err);
+        setCustomAlert({ show: true, message: t("adminDashboard.configuration.errorMessageLoadTokenExpiration") });
       }
     };
 
@@ -33,25 +44,42 @@ const ConfigTab = ({ t, userRole, userIdentifier: propUserIdentifier, fetchWithL
 
   const handleSavePassword = async () => {
     try {
-      await fetchWithLoading(
+      await authService.apiClient(
         `${SET_CONFIG}?configDescription=passwordExpiryDays&configValue=${passwordExpiryDays}&userRequired=${userIdentifier}`,
-        { method: "PUT", headers: { "Content-Type": "application/json" } }
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
       );
-      setCustomAlert({ show: true, message: "Configuração salva com sucesso!" });
+      setCustomAlert({ show: true, message: t("adminDashboard.configuration.successMessageSave") });
     } catch (err) {
-      setCustomAlert({ show: true, message: "Falha ao salvar configuração: " + err.message });
+      setCustomAlert({ show: true, message: `${t("adminDashboard.configuration.errorMessageSave")}: ${err.message}` });
     }
   };
 
   const handleSaveToken = async () => {
     try {
-      await fetchWithLoading(
+      await authService.apiClient(
         `${SET_CONFIG}?configDescription=tokenSessionExpiration&configValue=${tokenSessionExpiration}&userRequired=${userIdentifier}`,
-        { method: "PUT", headers: { "Content-Type": "application/json" } }
+        {
+          method: "PUT", headers: {
+            "Content-Type": "application/json",
+          }
+        }
       );
-      setCustomAlert({ show: true, message: "Configuração salva com sucesso!" });
+      setCustomAlert({ show: true, message: t("adminDashboard.configuration.successMessageSave") });
     } catch (err) {
-      setCustomAlert({ show: true, message: "Falha ao salvar configuração: " + err.message });
+      setCustomAlert({ show: true, message: `${t("adminDashboard.configuration.errorMessageSave")}: ${err.message}` });
+    }
+  };
+
+  const handleKeyPress = async (e, saveHandler) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      await saveHandler();
+      e.target.blur();
     }
   };
 
@@ -66,11 +94,11 @@ const ConfigTab = ({ t, userRole, userIdentifier: propUserIdentifier, fetchWithL
             type="text"
             value={passwordExpiryDays}
             onChange={(e) => {
-              const value = e.target.value;
-              if (/^\d*$/.test(value)) setPasswordExpiryDays(Number(value));
+              if (/^\d*$/.test(e.target.value)) setPasswordExpiryDays(Number(e.target.value));
             }}
+            onKeyDown={(e) => handleKeyPress(e, handleSavePassword)}
           />
-          {(userRole === "ADMIN") && (
+          {userRole === "ADMIN" && (
             <button className="save-config-btn" onClick={handleSavePassword}>
               {t("adminDashboard.save")}
             </button>
@@ -83,11 +111,11 @@ const ConfigTab = ({ t, userRole, userIdentifier: propUserIdentifier, fetchWithL
             type="text"
             value={tokenSessionExpiration}
             onChange={(e) => {
-              const value = e.target.value;
-              if (/^\d*$/.test(value)) setTokenSessionExpiration(Number(value));
+              if (/^\d*$/.test(e.target.value)) setTokenSessionExpiration(Number(e.target.value));
             }}
+            onKeyDown={(e) => handleKeyPress(e, handleSaveToken)}
           />
-          {(userRole === "ADMIN") && (
+          {userRole === "ADMIN" && (
             <button className="save-config-btn" onClick={handleSaveToken}>
               {t("adminDashboard.save")}
             </button>

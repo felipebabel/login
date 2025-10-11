@@ -1,7 +1,7 @@
 .admin-users-table {
-    width: 100%; 
-    table-layout: fixed; 
-    padding: 10px 15px; 
+    width: 100%;
+    table-layout: fixed;
+    padding: 10px 15px;
 }
 
 .admin-users-table thead tr:first-child th {
@@ -10,29 +10,29 @@
 
 .admin-users-table th,
 .admin-users-table td {
-  padding: 10px 15px; 
-  line-height: 1.1; 
+    padding: 10px 15px;
+    line-height: 1.1;
 }
 
 .admin-users-table th:nth-child(1),
 .admin-users-table td:nth-child(1) {
-    width: 15%; 
+    width: 15%;
 }
 
 .admin-users-table th:nth-child(2),
 .admin-users-table td:nth-child(2) {
-    width: 15%; 
+    width: 15%;
     height: 10px;
 }
 
 .admin-users-table th:nth-child(3),
 .admin-users-table td:nth-child(3) {
-    width: 35%; 
+    width: 35%;
 }
 
 .admin-users-table th:nth-child(4),
 .admin-users-table td:nth-child(4) {
-    width: 15%; 
+    width: 15%;
 }
 
 .admin-users-table th:nth-child(5),
@@ -44,5 +44,3 @@
 .admin-users-table td:nth-child(6) {
     width: 15%;
 }
-
-

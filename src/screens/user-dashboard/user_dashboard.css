@@ -12,7 +12,8 @@ html {
   scroll-behavior: smooth;
 }
 
-body, html {
+body,
+html {
   overflow-x: hidden;
   margin: 0;
   padding: 0;
@@ -61,7 +62,7 @@ body {
   margin-left: 2rem;
   display: flex;
   align-items: flex-end;
-  gap: 1rem; 
+  gap: 1rem;
 }
 
 .user-panel-title {
@@ -102,14 +103,14 @@ body {
 }
 
 .profile-photo {
-      display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
   width: 3.5em;
   height: 3.5em;
   border-radius: 100%;
-    }
+}
 
 .profile-upload-input {
   color: #f3f4f6;
