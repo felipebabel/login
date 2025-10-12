@@ -2,15 +2,18 @@ import React, { useState, useEffect } from "react";
 import "./ConfigTab.css";
 import { GET_CONFIG, SET_CONFIG } from "@api/endpoints";
 import { authService } from "@/components/auth/AuthService";
+import LoadingOverlay from '@/components/loading/LoadingOverlay';
 
 const ConfigTab = ({ t, userRole, userIdentifier: propUserIdentifier, setCustomAlert }) => {
   const [passwordExpiryDays, setPasswordExpiryDays] = useState(90);
   const [tokenSessionExpiration, setTokenSessionExpiration] = useState(10);
   const [userIdentifier] = useState(propUserIdentifier || location.state?.userIdentifier || null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchPasswordExpiry = async () => {
       try {
+        setLoading(true);
         const response = await authService.apiClient(`${GET_CONFIG}?configDescription=passwordExpiryDays`, {
           headers: {
             "Content-Type": "application/json",
@@ -22,9 +25,12 @@ const ConfigTab = ({ t, userRole, userIdentifier: propUserIdentifier, setCustomA
       } catch (err) {
         console.error(err);
         setCustomAlert({ show: true, message: t("adminDashboard.configuration.errorMessageLoadPasswordExpiry") });
+      } finally {
+        setLoading(false);
       }
 
       try {
+        setLoading(true);
         const response = await authService.apiClient(`${GET_CONFIG}?configDescription=tokenSessionExpiration`, {
           headers: {
             "Content-Type": "application/json",
@@ -36,6 +42,8 @@ const ConfigTab = ({ t, userRole, userIdentifier: propUserIdentifier, setCustomA
       } catch (err) {
         console.error(err);
         setCustomAlert({ show: true, message: t("adminDashboard.configuration.errorMessageLoadTokenExpiration") });
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -44,6 +52,8 @@ const ConfigTab = ({ t, userRole, userIdentifier: propUserIdentifier, setCustomA
 
   const handleSavePassword = async () => {
     try {
+      setLoading(true);
+
       await authService.apiClient(
         `${SET_CONFIG}?configDescription=passwordExpiryDays&configValue=${passwordExpiryDays}&userRequired=${userIdentifier}`,
         {
@@ -56,11 +66,14 @@ const ConfigTab = ({ t, userRole, userIdentifier: propUserIdentifier, setCustomA
       setCustomAlert({ show: true, message: t("adminDashboard.configuration.successMessageSave") });
     } catch (err) {
       setCustomAlert({ show: true, message: `${t("adminDashboard.configuration.errorMessageSave")}: ${err.message}` });
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleSaveToken = async () => {
     try {
+      setLoading(true);
       await authService.apiClient(
         `${SET_CONFIG}?configDescription=tokenSessionExpiration&configValue=${tokenSessionExpiration}&userRequired=${userIdentifier}`,
         {
@@ -72,6 +85,8 @@ const ConfigTab = ({ t, userRole, userIdentifier: propUserIdentifier, setCustomA
       setCustomAlert({ show: true, message: t("adminDashboard.configuration.successMessageSave") });
     } catch (err) {
       setCustomAlert({ show: true, message: `${t("adminDashboard.configuration.errorMessageSave")}: ${err.message}` });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -85,6 +100,8 @@ const ConfigTab = ({ t, userRole, userIdentifier: propUserIdentifier, setCustomA
 
   return (
     <div className="config-tab-section">
+      {loading && <LoadingOverlay />}
+
       <h2>{t("adminDashboard.passwordConfig")}</h2>
 
       <div className="config-grid">

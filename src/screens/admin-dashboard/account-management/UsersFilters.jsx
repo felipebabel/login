@@ -1,6 +1,7 @@
 import React from "react";
 
 const UsersFilters = ({
+  t,
   usernameFilter,
   setUsernameFilter,
   userIdentifierFilter,
@@ -51,24 +52,24 @@ const UsersFilters = ({
     <form className="logs-filters" onSubmit={onSubmit}>
       <input
         type="text"
-        placeholder="Username"
+        placeholder={t("adminDashboard.username")}
         value={usernameFilter}
         onChange={handleUsernameChange}
       />
             <input
         type="text"
-        placeholder="Name"
+        placeholder={t("adminDashboard.name")}
         value={nameFilter}
         onChange={handleNameChange}
       />
       <input
         type="text"
-        placeholder="User identifier"
+        placeholder={t("adminDashboard.userIdentifier")}
         value={userIdentifierFilter}
         onChange={handleUserIdentifierChange}
       />
       <button type="submit" className="filter-btn">
-        🔍 Filtrar
+        🔍  {t("adminDashboard.filterButton")}
       </button>
             <button
   type="button"
@@ -79,7 +80,7 @@ const UsersFilters = ({
     setNameFilter("");
   }}
 >
-  Limpar filtros
+  {t("adminDashboard.clearFilter")}
 </button>
     </form>
   );

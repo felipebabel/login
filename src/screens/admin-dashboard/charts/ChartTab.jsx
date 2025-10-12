@@ -4,15 +4,16 @@ import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid
 } from "recharts";
 import "./ChartTab.css";
-import { GET_ACCOUNT_MONTH, GET_TOTAL_ACCOUNT } from "@api/endpoints";
-
+import { GET_ACCOUNT_MONTH, GET_TOTAL_ACCOUNT, GET_LOGIN_ATTEMPTS } from "@api/endpoints";
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#AA336A"];
 import { authService } from "@/components/auth/AuthService";
+import LoadingOverlay from '@/components/loading/LoadingOverlay';
 
 const ChartTab = ({ t }) => {
   const [activeTab, setActiveTab] = useState("status");
   const [usersPerMonth, setUsersPerMonth] = useState([]);
-  const [loginAttemptsPerDay, setLoginAttemptsPerDay] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [loginAttemptsData, setLoginAttemptsData] = useState([]);
   const [localTotals, setLocalTotals] = useState({
     totalActive: 0,
     totalInactive: 0,
@@ -20,20 +21,58 @@ const ChartTab = ({ t }) => {
     totalBlocked: 0
   });
 
+  const CustomTooltip = ({ active, payload }) => {
+    if (active && payload && payload.length) {
+      const data = payload[0];
+      return (
+        <div
+          style={{
+            backgroundColor: "#2e2e33",
+            color: "#fff",
+            padding: "10px",
+            borderRadius: "8px",
+            boxShadow: "0 2px 6px rgba(0,0,0,0.25)"
+          }}
+        >
+          {data.name}: {data.value}
+        </div>
+      );
+    }
+    return null;
+  };
+
   useEffect(() => {
-    setLoginAttemptsPerDay([
-      { date: "2025-09-16", count: 3 },
-      { date: "2025-09-17", count: 5 },
-      { date: "2025-09-18", count: 2 },
-      { date: "2025-09-19", count: 7 },
-      { date: "2025-09-20", count: 4 },
-      { date: "2025-09-21", count: 6 },
-      { date: "2025-09-22", count: 8 },
-    ]);
-  }, []);
+    if (activeTab === "loginAttempts") {
+      fetchLoginAttempts();
+    }
+  }, [activeTab]);
+
+  const fetchLoginAttempts = async () => {
+    try {
+      setLoading(true);
+
+      const data = await authService.apiClient(GET_LOGIN_ATTEMPTS);
+      const response = await data.json();
+      const translationKeys = {
+        'LOGIN ACCOUNT': 'adminDashboard.loginAccountOk',
+        'LOGIN ATTEMPT FAILED': 'adminDashboard.loginAccountFailed'
+      };
+      const formatted = response.map(item => ({
+        name: t(translationKeys[item.action] || item.action),
+        value: item.total
+      }));
+      setLoginAttemptsData(formatted);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const fetchTotals = async () => {
     try {
+      setLoading(true);
+
       const data = await authService.apiClient(GET_TOTAL_ACCOUNT);
       const response = await data.json();
       setLocalTotals({
@@ -44,6 +83,8 @@ const ChartTab = ({ t }) => {
       });
     } catch (error) {
       console.error(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -54,15 +95,23 @@ const ChartTab = ({ t }) => {
   useEffect(() => {
     const fetchNewAccounts = async () => {
       try {
+        setLoading(true);
         const response = await authService.apiClient(GET_ACCOUNT_MONTH);
         const data = await response.json();
-        const formatted = data.map(item => ({
-          month: `${new Date(item.year, item.month - 1).toLocaleString('default', { month: 'short' })}/${item.year}`,
-          count: item.totalUsers
-        }));
+        const formatted = data.map(item => {
+          const monthName = t(`months.${item.month}`);
+
+          const label = `${monthName}/${item.year}`;
+          return {
+            month: label,
+            count: item.totalUsers
+          }
+        });
         setUsersPerMonth(formatted);
       } catch (error) {
         console.error("Error searching for new users:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -80,24 +129,25 @@ const ChartTab = ({ t }) => {
 
   return (
     <div className="flex h-full">
+      {loading && <LoadingOverlay />}
       <div className="dashboard-sidebar">
         <button
           className={`tab-btn-vertical ${activeTab === "status" ? "active" : ""}`}
           onClick={() => setActiveTab("status")}
         >
-          {t("adminDashboard.userStatus")}
+          {t("adminDashboard.totalAccount")}
         </button>
         <button
           className={`tab-btn-vertical ${activeTab === "newUsers" ? "active" : ""}`}
           onClick={() => setActiveTab("newUsers")}
         >
-          {t("adminDashboard.newUsersPerMonth")}
+          {t("adminDashboard.newAccountsLast12Mounths")}
         </button>
         <button
           className={`tab-btn-vertical ${activeTab === "loginAttempts" ? "active" : ""}`}
           onClick={() => setActiveTab("loginAttempts")}
         >
-          {t("adminDashboard.loginAttemptsPerDay")}
+          {t("adminDashboard.loginAttempts")}
         </button>
       </div>
 
@@ -120,7 +170,7 @@ const ChartTab = ({ t }) => {
                     <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                   ))}
                 </Pie>
-                <Tooltip />
+                <Tooltip content={<CustomTooltip />} />
                 <Legend />
               </PieChart>
             </ResponsiveContainer>
@@ -130,50 +180,70 @@ const ChartTab = ({ t }) => {
         {activeTab === "newUsers" && (
           <div className="chart-wrapper">
             <ResponsiveContainer width="80%" height={400}>
-              <BarChart data={usersPerMonth} margin={{ top: 20, right: 30, left: 50, bottom: 60 }}>
+              <BarChart
+                data={usersPerMonth}
+                margin={{ top: 20, right: 0, left: 100, bottom: 80 }}
+                barCategoryGap="20%"
+              >
                 <CartesianGrid strokeDasharray="3 3" stroke="#555555" />
                 <XAxis
                   dataKey="month"
-                  tick={{ fill: "#ffffff", fontSize: 14 }}
+                  tick={{ fill: "#ffffff", fontSize: 12 }}
+                  angle={-45}
+                  textAnchor="end"
+                  interval={0}
+
                   label={{
-                    value: "Months",
-                    position: "insideBottom",
-                    offset: 30,
-                    style: { fontSize: 16, fontWeight: "bold", fill: "#00C49F" }
+                    value: t("adminDashboard.months"),
+                    position: "bottom",
+                    offset: 40,
+                    style: { fontSize: 16, fontWeight: "bold", fill: "#ffffff" }
                   }}
                 />
                 <YAxis
                   tick={{ fill: "#ffffff", fontSize: 14 }}
                   label={{
-                    value: "New Accounts",
-                    angle: -90,
+                    value: t("adminDashboard.newAccounts"),
+                    offset: -100,
                     position: "insideLeft",
-                    offset: 40,
-                    style: { fontSize: 16, fontWeight: "bold", fill: "#00C49F" },
+                    style: { fontSize: 16, fontWeight: "bold", fill: "#ffffff" },
                     textAnchor: "middle"
                   }}
                 />
-                <Tooltip cursor={false} formatter={(value) => [`${value}`, "New account"]} />
+                <Tooltip cursor={false} formatter={(value) => [`${value}`, t("adminDashboard.newAccounts")]} />
                 <Bar dataKey="count" fill="#00C49F" isAnimationActive={false} />
               </BarChart>
             </ResponsiveContainer>
+
+
           </div>
         )}
 
         {activeTab === "loginAttempts" && (
-          <div className="chart-wrapper">
-            <ResponsiveContainer width="80%" height={400}>
-              <BarChart data={loginAttemptsPerDay} margin={{ top: 50, right: 30, left: 40, bottom: 10 }}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="date" />
-                <YAxis />
-                <Tooltip />
+          <div className="chart-wrapper-pie">
+            <ResponsiveContainer width="100%" height={400}>
+              <PieChart>
+                <Pie
+                  data={loginAttemptsData}
+                  dataKey="value"
+                  nameKey="name"
+                  cx="50%"
+                  cy="50%"
+                  outerRadius={120}
+                  label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
+                  labelLine={false}
+                >
+                  {loginAttemptsData.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                  ))}
+                </Pie>
+                <Tooltip content={<CustomTooltip />} />
                 <Legend />
-                <Bar dataKey="count" fill="#FF8042" cursor="pointer" />
-              </BarChart>
+              </PieChart>
             </ResponsiveContainer>
           </div>
         )}
+
       </div>
     </div>
   );

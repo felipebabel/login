@@ -5,8 +5,9 @@ import PaginationComponent from "@/components/common/PaginationComponent";
 import "./logsSection.css";
 import { GET_LOGS } from "@api/endpoints";
 import { authService } from "@/components/auth/AuthService";
+import LoadingOverlay from '@/components/loading/LoadingOverlay';
 
-function LogsSection({t }) {
+function LogsSection({ t }) {
   const [logsData, setLogsData] = useState([]);
   const [logsPage, setLogsPage] = useState(0);
   const [logsTotalPages, setLogsTotalPages] = useState(1);
@@ -14,9 +15,11 @@ function LogsSection({t }) {
   const [usernameFilter, setUsernameFilter] = useState("");
   const [actionFilter, setActionFilter] = useState("");
   const [userIdentifierFilter, setUserIdentifierFilter] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const fetchLogs = async (page = 0, sortBy = logsSortConfig.column, direction = logsSortConfig.direction) => {
     try {
+      setLoading(true);
       const queryParams = new URLSearchParams({
         page,
         size: 10,
@@ -40,6 +43,8 @@ function LogsSection({t }) {
       setLogsSortConfig({ column: sortBy, direction });
     } catch (err) {
       console.error(err);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -56,7 +61,9 @@ function LogsSection({t }) {
 
   return (
     <div className="logs-section">
+      {loading && <LoadingOverlay />}
       <LogsFilters
+        t={t}
         usernameFilter={usernameFilter}
         setUsernameFilter={setUsernameFilter}
         actionFilter={actionFilter}

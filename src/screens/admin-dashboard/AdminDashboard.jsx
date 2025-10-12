@@ -46,6 +46,7 @@ function AdminDashboard() {
 
       const urlWithParams = new URL(LOGOUT);
       urlWithParams.searchParams.append("user", userIdentifier);
+      setLoading(true);
 
       await authService.apiClient(urlWithParams, {
         method: "PUT",
@@ -58,6 +59,8 @@ function AdminDashboard() {
     } catch (error) {
       console.error("Error logging out:", error);
       navigate("/");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -106,7 +109,7 @@ function AdminDashboard() {
         </div>
         <TabsComponent tabs={extraTabs} activeTab={activeExtraTab} onTabClick={setActiveExtraTab} />
 
-        {activeExtraTab === "accounts" && (<AccountsManagement t={t} setCustomAlert={setCustomAlert} />)}
+        {activeExtraTab === "accounts" && (<AccountsManagement t={t} setCustomAlert={setCustomAlert} userIdentifier={userIdentifier} />)}
         {activeExtraTab === "logs" && <LogsSection t={t} />}
         {activeExtraTab === "config" && <ConfigTab t={t} userRole={userRole} userIdentifier={userIdentifier} setCustomAlert={setCustomAlert} />}
         {activeExtraTab === "charts" && (<div className="charts-section"> <ChartTab t={t} /></div>)}

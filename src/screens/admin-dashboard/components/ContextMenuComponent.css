@@ -1,5 +1,5 @@
 .context-menu {
-position: fixed;
+  position: absolute;
   background-color: #27272a; 
   color: #f3f4f6;
   border: 1px solid #4b5563;
@@ -10,12 +10,12 @@ position: fixed;
   box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 }
 
-.context-menu-item {
+.context-menu li {
   padding: 0.5rem 1.5rem;
   cursor: pointer;
   transition: background-color 0.2s ease;
 }
 
-.context-menu-item:hover {
+.context-menu li:hover {
   background-color: #3b82f6;
 }

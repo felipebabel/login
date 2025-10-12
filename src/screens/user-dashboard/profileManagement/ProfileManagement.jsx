@@ -198,7 +198,7 @@ const ProfileManagement = ({ t, setUserIdentifier, setNameDash }) => {
 
   const handleSaveProfile = async () => {
      if (!isValidDate(birthDateInput)) {
-        setCustomAlert({ show: true, message: t("alert.invalidBirthDate") || "Invalid birth date" });
+        setCustomAlert({ show: true, message: t("alert.invalidBirthDate")});
         return;
       }
     const payload = {

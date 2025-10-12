@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import TabsComponent from "@/components/tabs-component/TabsComponent";
 import UsersFilters from "./UsersFilters";
 import UsersTable from "./UsersTable";
@@ -14,12 +15,19 @@ import {
   GET_ACTIVE_ACCOUNT,
   GET_INACTIVE_ACCOUNT,
   GET_ACTIVE_SESSIONS,
-  GET_USERS
+  GET_USERS,
+  BLOCK_USER,
+  INACTIVATE_USER,
+  ACTIVATE_USER,
+  DENY_USER,
+  GIVE_ANALYST_ROLE,
+  FORCE_PASSWORD_CHANGE
 } from "@api/endpoints";
 import { authService } from "@/components/auth/AuthService";
+import LoadingOverlay from '@/components/loading/LoadingOverlay';
 
 
-function AccountsManagement({ t, setCustomAlert }) {
+function AccountsManagement({ t, setCustomAlert, userIdentifier }) {
   const [activeTab, setActiveTab] = useState("active");
   const [usersData, setUsersData] = useState({
     pending: [],
@@ -28,7 +36,7 @@ function AccountsManagement({ t, setCustomAlert }) {
     inactive: [],
     activeSessions: []
   });
-
+  const [loading, setLoading] = useState(false);
   const [sortConfig, setSortConfig] = useState({ column: "identifier", direction: "asc" });
 
   const [pagination, setPagination] = useState({
@@ -67,6 +75,8 @@ function AccountsManagement({ t, setCustomAlert }) {
   const [contextMenu, setContextMenu] = useState(null);
   const [profileModalOpen, setProfileModalOpen] = useState(false);
   const [profileData, setProfileData] = useState(null);
+  const location = useLocation();
+  const userRole = location.state?.userRole || "";
 
   const endpointMap = {
     pending: GET_PENDING_ACCOUNT,
@@ -78,6 +88,7 @@ function AccountsManagement({ t, setCustomAlert }) {
 
   const fetchUsers = async (tab, page = 0, sortBy = sortConfig.column, direction = sortConfig.direction, filters = {}) => {
     try {
+      setLoading(true);
       const params = new URLSearchParams({
         page,
         size: pagination.size,
@@ -101,6 +112,8 @@ function AccountsManagement({ t, setCustomAlert }) {
     } catch (error) {
       console.error(error);
       setCustomAlert({ show: true, message: t("adminDashboard.messageCannotLoadUsers") });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -114,6 +127,7 @@ function AccountsManagement({ t, setCustomAlert }) {
         userIdentifier: filters.userIdentifier || "",
         name: filters.name || ""
       });
+      setLoading(true);
 
       const response = await authService.apiClient(`${GET_USERS}?${params.toString()}`, {
         headers: {
@@ -133,11 +147,15 @@ function AccountsManagement({ t, setCustomAlert }) {
     } catch (error) {
       console.error(error);
       setCustomAlert({ show: true, message: t("adminDashboard.messageCannotLoadFilteredUsers") });
+    } finally {
+      setLoading(false);
     }
   };
 
   const fetchTotals = async () => {
     try {
+      setLoading(true);
+
       const response = await authService.apiClient(GET_TOTAL_ACCOUNT, {
         method: "GET",
         headers: { "Content-Type": "application/json" },
@@ -149,6 +167,8 @@ function AccountsManagement({ t, setCustomAlert }) {
     } catch (error) {
       console.error(error);
       setCustomAlert({ show: true, message: t("adminDashboard.messageCannotLoadTotalUsers") });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -177,35 +197,51 @@ function AccountsManagement({ t, setCustomAlert }) {
 
   const contextMenuOptionsMap = {
     active: [
-      { key: "view", label: "See Profile" },
-      { key: "block", label: "Block" },
+      { key: "view", label: t("adminDashboard.accountmanagement.SeeProfile") },
+      { key: "inactive", label: t("adminDashboard.accountmanagement.inactive") },
+      { key: "block", label: t("adminDashboard.accountmanagement.BlockUser") },
+      { key: "giveAnalystRole", label: t("adminDashboard.accountmanagement.assignAnalystRole") },
+      { key: "forcePasswordChange", label: t("adminDashboard.accountmanagement.forcePasswordChange") },
     ],
     inactive: [
-      { key: "view", label: "See Profile" },
-      { key: "activate", label: "Activate" },
+      { key: "view", label: t("adminDashboard.accountmanagement.SeeProfile") },
+      { key: "activate", label: t("adminDashboard.activate") },
+      { key: "block", label: t("adminDashboard.accountmanagement.BlockUser") },
     ],
     pending: [
-      { key: "view", label: "See Profile" },
-      { key: "activate", label: "Activate" },
-      { key: "delete", label: "Delete" },
+      { key: "view", label: t("adminDashboard.accountmanagement.SeeProfile") },
+      { key: "allow", label: t("adminDashboard.allow") },
+      { key: "deny", label: t("adminDashboard.deny") },
     ],
     blocked: [
-      { key: "view", label: "See Profile" },
-      { key: "activate", label: "Activate" },
-      { key: "delete", label: "Delete" },
+      { key: "view", label: t("adminDashboard.accountmanagement.SeeProfile") },
+      { key: "activate", label: t("adminDashboard.activate") },
     ],
     activeSessions: [
-      { key: "view", label: "See Profile" },
-      { key: "terminate", label: "Terminate Session" },
+      { key: "view", label: t("adminDashboard.accountmanagement.SeeProfile") },
+      { key: "giveAnalystRole", label: t("adminDashboard.accountmanagement.assignAnalystRole") },
+      { key: "forcePasswordChange", label: t("adminDashboard.accountmanagement.forcePasswordChange") },
     ],
+    filtered: [
+      { key: "view", label: t("adminDashboard.accountmanagement.SeeProfile") },
+    ]
+    
   };
+  if (userRole === "ANALYST") {
+  const seeProfileOnly = [
+    { key: "view", label: t("adminDashboard.accountmanagement.SeeProfile") },
+  ];
+  Object.keys(contextMenuOptionsMap).forEach(key => {
+    contextMenuOptionsMap[key] = seeProfileOnly;
+  });
+}
 
 
   const handleRightClick = (e, user) => {
     e.preventDefault();
     setContextMenu({
-      x: e.clientX,
-      y: e.clientY,
+      x: e.pageX,
+      y: e.pageY,
       user,
       options: contextMenuOptionsMap[activeTab] || [],
       visible: true,
@@ -213,19 +249,119 @@ function AccountsManagement({ t, setCustomAlert }) {
   };
 
   const handleMenuOptionClick = async (option, user) => {
-    if (option === "See Profile") {
+    if (option === "view") {
       try {
+        setLoading(true);
         const params = new URLSearchParams({ username: user.username });
         const response = await authService.apiClient(`${GET_USER}?${params.toString()}`);
-        if (!response.ok) throw new Error("Erro ao buscar usuário");
+        if (!response.ok) throw new Error("Error when searching for user");
         const data = await response.json();
         setProfileData(data);
         setProfileModalOpen(true);
       } catch (error) {
         console.error(error);
         setCustomAlert({ show: true, message: t("adminDashboard.messageCannotLoadProfile") });
+      } finally {
+        setLoading(false);
       }
-    }
+    } else if (option === "activate" || option === "allow") {
+      try {
+        setLoading(true);
+        const params = new URLSearchParams({ user: user.identifier });
+        const response = await authService.apiClient(`${ACTIVATE_USER}?${params.toString()}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+        });
+        if (!response.ok) throw new Error("Error when activate user");
+        setCustomAlert({ show: true, message: t("adminDashboard.accountActivatedSuccessfully") });
+      } catch (error) {
+        console.error(error);
+        setCustomAlert({ show: true, message: t("adminDashboard.messageCannotActiveProfile") });
+      } finally {
+        setLoading(false);
+      }
+    } else if (option === "inactive") {
+      try {
+        setLoading(true);
+        const params = new URLSearchParams({ user: user.identifier });
+        const response = await authService.apiClient(`${INACTIVATE_USER}?${params.toString()}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+        });
+        if (!response.ok) throw new Error("Error when inactivate user");
+        setCustomAlert({ show: true, message: t("adminDashboard.accountInactivatedSuccessfully") });
+      } catch (error) {
+        console.error(error);
+        setCustomAlert({ show: true, message: t("adminDashboard.messageCannotInactiveProfile") });
+      } finally {
+        setLoading(false);
+      }
+    } else if (option === "block") {
+      try {
+        setLoading(true);
+        const params = new URLSearchParams({ user: user.identifier });
+        const response = await authService.apiClient(`${BLOCK_USER}?${params.toString()}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+        });
+        if (!response.ok) throw new Error("Error when block user");
+        setCustomAlert({ show: true, message: t("adminDashboard.accountDeletedSuccessfully") });
+      } catch (error) {
+        console.error(error);
+        setCustomAlert({ show: true, message: t("adminDashboard.messageCannotBlockProfile") });
+      } finally {
+        setLoading(false);
+      }
+    } else if (option === "deny") {
+      try {
+        setLoading(true);
+        const params = new URLSearchParams({ user: user.identifier });
+        const response = await authService.apiClient(`${DENY_USER}?${params.toString()}`, {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" },
+        });
+        if (!response.ok) throw new Error("Error when deny user");
+        setCustomAlert({ show: true, message: t("adminDashboard.accountDeniedSuccessfully") });
+      } catch (error) {
+        console.error(error);
+        setCustomAlert({ show: true, message: t("adminDashboard.messageCannotDenyProfile") });
+      } finally {
+        setLoading(false);
+      }
+    } else if (option === "giveAnalystRole") {
+      try {
+        setLoading(true);
+        const params = new URLSearchParams({ userIdentifier: user.identifier, role: "ANALYST", userRequired: userIdentifier })
+        const response = await authService.apiClient(`${GIVE_ANALYST_ROLE}?${params.toString()}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+        });
+        if (!response.ok) throw new Error("Error when give analyst role to the user");
+        setCustomAlert({ show: true, message: t("adminDashboard.analystRoleAssignedSuccessfully") });
+
+      } catch (error) {
+        console.error(error);
+        setCustomAlert({ show: true, message: t("adminDashboard.messageCannotGiveAnalystRoleForProfile") });
+      } finally {
+        setLoading(false);
+      }
+    } else if (option === "forcePasswordChange") {
+      try {
+        setLoading(true);
+        const params = new URLSearchParams({ user: user.identifier});
+        const response = await authService.apiClient(`${FORCE_PASSWORD_CHANGE}?${params.toString()}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+        });
+        if (!response.ok) throw new Error("Error when force password change to the user");
+        setCustomAlert({ show: true, message: t("adminDashboard.forcePasswordChangeForProfileSuccessfully") });
+      } catch (error) {
+        console.error(error);
+        setCustomAlert({ show: true, message: t("adminDashboard.messageCannotForcePasswordChangeForProfile") });
+      } finally {
+        setLoading(false);
+      }
+    } 
     setContextMenu(null);
   };
 
@@ -313,6 +449,8 @@ function AccountsManagement({ t, setCustomAlert }) {
 
   return (
     <div className="accounts-section">
+      {loading && <LoadingOverlay />}
+
       <TotalsComponent totals={totals} t={t} />
 
       <div className="tabs-filters-container">
@@ -330,6 +468,7 @@ function AccountsManagement({ t, setCustomAlert }) {
         </div>
 
         <UsersFilters
+          t={t}
           usernameFilter={usernameFilter}
           setUsernameFilter={setUsernameFilter}
           userIdentifierFilter={userIdentifierFilter}

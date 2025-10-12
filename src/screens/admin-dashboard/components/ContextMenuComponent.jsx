@@ -16,18 +16,13 @@ function ContextMenuComponent({ contextMenu, closeMenu, handleAction }) {
 
   if (!contextMenu || !contextMenu.visible) return null;
 
-  const options = [
-    { key: "view", label: "View Profile" },
-    { key: "activate", label: "Activate" },
-    { key: "block", label: "Block" },
-    { key: "delete", label: "Delete" },
-  ];
-
+  const options = contextMenu.options || [];
+  if (options.length === 0) return null;
   return (
     <ul
       className="context-menu"
       ref={menuRef}
-      style={{ top: contextMenu.y, left: contextMenu.x }}
+      style={{ top: contextMenu.y - 42, left: contextMenu.x - 32}}
     >
       {options.map(({ key, label }) => (
         <li

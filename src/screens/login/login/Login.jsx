@@ -50,7 +50,13 @@ function Login() {
       });
 
       if (!response.ok) {
-        setError(t("login.errorInvalid"));
+        const errData = await response.json();
+        if (errData.message === "Password expired") {
+          sessionStorage.setItem("user", JSON.stringify(errData));
+          setShowModal(true);
+        } else {
+          setError(t("login.errorInvalid"));
+        }
         return;
       }
 
@@ -66,7 +72,6 @@ function Login() {
       if (!userResponse.ok) {
         const errData = await userResponse.json();
         if (errData.message === "Password expired") {
-          sessionStorage.setItem("user", JSON.stringify(errData));
           setShowModal(true);
         } else {
           setError(t("login.errorInvalid"));
@@ -179,7 +184,7 @@ function Login() {
             <button
               onClick={() => {
                 setShowModal(false);
-                navigate("/reset-password");
+                navigate("/reset-password", { state: { username: user } });
               }}
             >
               {t("login.ok")}

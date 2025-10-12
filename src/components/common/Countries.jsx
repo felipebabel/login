@@ -167,7 +167,7 @@ const countries = [
   "Zimbabwe"
 ];
 
-const CountrySelect = ({ value, onChange, className, t}) => {
+const CountrySelect = ({ value, onChange, className, t }) => {
   return (
     <select
       name="country"
@@ -176,11 +176,15 @@ const CountrySelect = ({ value, onChange, className, t}) => {
       className={`profile-select ${className || ""}`}
     >
       <option value="">
-        {t("userDashboard.selectCountry")}
+        {t("userDashboard.selectCountry")} 
       </option>
-      {countries.map((country) => (
-        <option key={country} value={country}>
-          {country}
+      
+      {countries.map((countryKey) => (
+        <option 
+          key={countryKey} 
+          value={countryKey} 
+        >
+          {t(`countries.${countryKey}`)} 
         </option>
       ))}
     </select>

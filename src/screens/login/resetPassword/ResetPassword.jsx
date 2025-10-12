@@ -18,6 +18,8 @@ function ResetPassword() {
   const location = useLocation();
   const navigate = useNavigate();
   const { t } = useTranslation();
+    const username = location.state?.username || "";
+
 
   const email = location.state?.email || sessionStorage.getItem("resetEmail");
   const user = sessionStorage.getItem("user");
@@ -49,7 +51,7 @@ function ResetPassword() {
 
       const params = email
         ? new URLSearchParams({ email, newPassword })
-        : new URLSearchParams({ user, newPassword });
+        : new URLSearchParams({ user: username, newPassword });
 
       const urlWithParams = `${RESET_PASSWORD}?${params.toString()}`;
 
