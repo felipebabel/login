@@ -38,6 +38,16 @@ input,
   min-width: 30rem;
 }
 
+@media (max-width: 1600px) {
+  .config-item-user label {
+    min-width: 10rem;
+  }
+
+  .config-item-user label:nth-of-type(2) {
+    min-width: 30rem;
+  }
+}
+
 .delete-account-button {
   padding: 0.75rem 1rem;
   border-radius: 8px;
@@ -84,7 +94,6 @@ input,
   border: none;
 }
 
-/* Botão cinza (Cancelar) */
 .no-btn {
   margin-top: 1rem;
   background-color: #6b7280;

@@ -23,6 +23,7 @@ function AdminDashboard() {
   const [activeExtraTab, setActiveExtraTab] = useState("accounts");
   const [userIdentifier, setUserIdentifier] = useState(location.state?.userIdentifier || null);
   const [userRole, setUserRole] = useState(location.state?.userRole || "user");
+  const [userName, setUserName] = useState(location.state?.userName || "user");
 
   const [loading, setLoading] = useState(false);
   const [customAlert, setCustomAlert] = useState({ show: false, message: "" });
@@ -68,10 +69,40 @@ function AdminDashboard() {
 
       <div className="admin-panel">
         <div className="admin-panel-header">
-          <h1>{t("adminDashboard.title")}</h1>
-          <button className="admin-panel-logout-btn" onClick={handleBackToLogin}>
-            {t("dashboard.logoutButton")}
-          </button>
+          {userRole === "ADMIN" && (
+            <>
+              <h1>{t("adminDashboard.title")}</h1>
+              <button className="admin-panel-logout-btn" onClick={handleBackToLogin}>
+                {t("dashboard.logoutButton")}
+              </button>
+            </>
+          )}
+          {userRole === "ANALYST" && (
+            <>
+              <h1>{t("analystDashboard.title")}</h1>
+              <div className="admin-panel-buttons">
+                <button
+                  className="analyst-panel-profile-btn"
+                  onClick={() => {
+                    navigate("/user-dashboard", {
+                      state: {
+                        userName: userName,
+                        userRole: userRole,
+                        userIdentifier: userIdentifier,
+                      },
+                    });
+                  }}
+                >
+                  {t("analystDashboard.seeMyProfile")}
+                </button>
+                <button className="admin-panel-logout-btn" onClick={handleBackToLogin}>
+                  {t("dashboard.logoutButton")}
+                </button>
+              </div>
+
+            </>
+          )}
+
         </div>
         <TabsComponent tabs={extraTabs} activeTab={activeExtraTab} onTabClick={setActiveExtraTab} />
 

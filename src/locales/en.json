@@ -82,6 +82,11 @@
     "yesButton": "Yes, Delete",
     "noButton": "No, Cancel"
   },
+  "analystDashboard": {
+    "title": "Analyst Dashboard",
+    "seeMyProfile": "See My Profile",
+    "seeAnalystDashboard": "See Analyst Dashboard"
+  },
   "adminDashboard": {
     "accountmanagement": {
       "SeeProfile": "See Profile",

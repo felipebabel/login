@@ -18,6 +18,7 @@ function UserDashboard() {
   const [activeTab, setActiveTab] = useState("accountManagement");
   const [customAlert, setCustomAlert] = useState({ show: false, message: "" });
   const [userIdentifier, setUserIdentifier] = useState(null);
+  const [userRole, setUserRole] = useState(location.state?.userRole || "user");
   const [userName, setUserName] = useState(location.state?.userName || "undefined");
   const [nameDash, setNameDash] = useState("");
   const tabs = [
@@ -76,14 +77,42 @@ function UserDashboard() {
               {t("dashboard.greeting", { name: nameDash || userName })}
             </h1>
           </div>
-          <button
-            className="user-panel-logout-btn"
-            onClick={handleBackToLogin}
-          >
-            {t("dashboard.logoutButton")}
-          </button>
-        </div>
+          {userRole === "ANALYST" && (
+            <>
+              <div className="admin-panel-buttons">
+                <button
+                  className="analyst-panel-profile-btn"
+                  onClick={() => {
+                    navigate("/admin-dashboard", {
+                      state: {
+                        userName: userName,
+                        userRole: userRole,
+                        userIdentifier: userIdentifier,
+                      },
+                    });
+                  }}
+                >
+                  {t("analystDashboard.seeAnalystDashboard")}
+                </button>
+                <button className="admin-panel-logout-btn" onClick={handleBackToLogin}>
+                  {t("dashboard.logoutButton")}
+                </button>
+              </div>
 
+            </>
+          )}
+          {userRole === "USER" && (
+            <>
+              <button
+                className="user-panel-logout-btn"
+                onClick={handleBackToLogin}
+              >
+                {t("dashboard.logoutButton")}
+              </button>
+
+            </>
+          )}
+        </div>
         <TabsComponent tabs={tabs} activeTab={activeTab} onTabClick={handleTabClick} />
         {activeTab === "accountManagement" && <ProfileManagement t={t} setUserIdentifier={setUserIdentifier}
           setNameDash={setNameDash} />}
