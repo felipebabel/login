@@ -198,7 +198,7 @@ function Login() {
           <LanguageSelector />
         </div>
         <a
-          href={`${import.meta.env.BASE_URL}assets/docs/info_project.pdf`}
+          href={`${import.meta.env.BASE_URL}assets/docs/Login_Project.pdf`}
           target="_blank"
           className="info-link"
         >
