@@ -75,7 +75,7 @@ function LogsSectionUser({ t, userIdentifier }) {
           </div>
         </>
       ) : (
-        <p className="user-placeholder">{t("userDashboard.noLogFound")}</p>
+                  <p className="admin-placeholder">{t("adminDashboard.noUserFound")}</p>
       )}
     </div>
   );

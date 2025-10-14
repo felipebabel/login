@@ -73,6 +73,19 @@ class AuthService {
             } else {
                 return response; 
             }
+        } else if (response.status === 403) {
+            const overlay = document.createElement("div");
+        overlay.style.position = "fixed";
+        overlay.style.top = 0;
+        overlay.style.left = 0;
+        overlay.style.width = "100%";
+        overlay.style.height = "100%";
+        overlay.style.backgroundColor = "black";
+        overlay.style.zIndex = 9999;
+        document.body.appendChild(overlay);
+            alert("Inactive session. Please log in again.");
+            this.logout();
+            return response;
         }
         
         return response;
