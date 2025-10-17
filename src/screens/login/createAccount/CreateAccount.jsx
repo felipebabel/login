@@ -35,6 +35,11 @@ function CreateAccount() {
       return;
     }
 
+    if (password.length < 8) {
+      setError(t("register.errorPasswordTooShort"));
+      return;
+    }
+
     if (password !== confirmPassword) {
       setError(t("register.errorPasswordMismatch"));
       return;
@@ -69,7 +74,12 @@ function CreateAccount() {
       });
 
       if (!response.ok) {
-        setError(t("register.errorServer"));
+        const data = await response.json();
+        if (data.message.startsWith("User already exists")) {
+          setError(t("register.userAlreadyExists"));
+        } else if (data.message === "Email already exists") {
+          setError(t("register.emailAlreadyExists"));
+        }
         return;
       }
 

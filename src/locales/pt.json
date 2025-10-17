@@ -233,6 +233,9 @@
   "registerPendingEmail": "Por favor, verifique seu email para confirmar seu cadastro.",
   "ok": "Ok",
   "register": {
+        "emailAlreadyExists": "E-mail já cadastrado.",
+    "userAlreadyExists": "Usuário já existe.",
+    "errorPasswordTooShort": "A senha deve ter no mínimo 8 caracteres.",
     "title": "Criar Conta",
     "errorEmpty": "Por favor, preencha todos os campos.",
     "errorPasswordMismatch": "As senhas não coincidem.",

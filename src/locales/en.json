@@ -233,7 +233,10 @@
   "registerPendingEmail": "Please check your email to confirm your registration.",
   "ok": "Ok",
   "register": {
+    "emailAlreadyExists": "Email is already registered.",
+    "errorPasswordTooShort": "Password must be at least 8 characters long.",
     "title": "Create Account",
+    "userAlreadyExists": "User already exists.",
     "errorEmpty": "Please fill in all fields.",
     "errorPasswordMismatch": "Passwords do not match.",
     "errorInvalidEmail": "Invalid email address.",
