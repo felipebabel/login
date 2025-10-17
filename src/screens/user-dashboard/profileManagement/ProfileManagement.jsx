@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import AlertComponent from '@/components/alert/AlertComponent';
-import { UPDATE_ACCOUNT, GET_USER } from "@api/endpoints";
+import { UPDATE_ACCOUNT, GET_MY_USER_DATA } from "@api/endpoints";
 import { useTranslation } from "react-i18next";
 import "./ProfileManagement.css";
 import CountrySelect from "@/components/common/Countries";
@@ -107,7 +107,7 @@ const ProfileManagement = ({ t, setUserIdentifier, setNameDash }) => {
       if (!userName) return;
       try {
         setLoading(true);
-        const response = await authService.apiClient(`${GET_USER}?username=${userName}`);
+        const response = await authService.apiClient(`${GET_MY_USER_DATA}?username=${userName}`);
         if (!response.ok) throw new Error("Failed to fetch user data");
         const data = await response.json();
 

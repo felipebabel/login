@@ -6,7 +6,7 @@ import i18n from "i18next";
 import LanguageSelector from "@/components/language-selector/LanguageSelector";
 import packageJson from "@root/package.json";
 import "./login.css";
-import { LOGIN, GET_USER } from "@api/endpoints";
+import { LOGIN, GET_MY_USER_DATA } from "@api/endpoints";
 import LoadingOverlay from "@/components/loading/LoadingOverlay";
 import { authService } from "@/components/auth/AuthService";
 import AlertComponent from "@/components/alert/AlertComponent";
@@ -75,11 +75,12 @@ function Login() {
         userRole: data.role,
       });
       localStorage.setItem("jwtToken", data.token);
-      const userResponse = await authService.apiClient(`${GET_USER}?username=${user}`);
+      const userResponse = await authService.apiClient(`${GET_MY_USER_DATA}?username=${user}`);
+
+      const userData = await userResponse.json();
 
       if (!userResponse.ok) {
-        const errData = await userResponse.json();
-        if (errData.message === "Password expired") {
+        if (userData.message === "Password expired") {
           setShowModal(true);
         } else {
           setError(t("login.errorInvalid"));
@@ -87,7 +88,6 @@ function Login() {
         return;
       }
 
-      const userData = await userResponse.json();
       if (userData?.username) {
         const dashboardPath =
           userData.role === "ADMIN" || userData.role === "ANALYST"

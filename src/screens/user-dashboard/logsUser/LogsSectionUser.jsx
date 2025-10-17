@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import LogsTable from "./LogsUserTable";
 import PaginationComponent from "@/components/common/PaginationComponent";
-import { GET_LOGS } from "@api/endpoints";
+import { GET_MY_LOGS } from "@api/endpoints";
 import "./LogsSectionUser.css";
 import LoadingOverlay from '@/components/loading/LoadingOverlay';
 import { authService } from "@/components/auth/AuthService";
@@ -21,9 +21,8 @@ function LogsSectionUser({ t, userIdentifier }) {
         size: 10,
         sortBy,
         direction,
-        userIdentifier: userIdentifier
       });
-      const response = await authService.apiClient(`${GET_LOGS}?${queryParams.toString()}`);
+      const response = await authService.apiClient(`${GET_MY_LOGS}?${queryParams.toString()}`);
       const data = await response.json();
       setLogsData(data.content || []);
       setLogsPage(page);

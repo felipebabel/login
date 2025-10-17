@@ -17,12 +17,19 @@ function ValidateCodeResetPassword() {
   const { t } = useTranslation();
   const [countdown, setCountdown] = useState(0);
 
+  const languageMap = {
+    pt: "PORTUGUESE",
+    en: "ENGLISH",
+    es: "SPANISH",
+    de: "GERMAN",
+  };
+
   const handleResendCode = async () => {
     setError("");
     setSuccess("");
     try {
       setLoading(true);
-      const params = new URLSearchParams({ email });
+      const params = new URLSearchParams({ email, lang: languageMap[i18n.language] || "ENGLISH" });
       const response = await fetch(`${RECOVER_PASSWORD}?${params.toString()}`, {
         method: "POST"
       });

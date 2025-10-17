@@ -27,6 +27,13 @@ function RecoverPassword() {
     return () => clearInterval(timer);
   }, [success, countdown, t]);
 
+  const languageMap = {
+    pt: "PORTUGUESE",
+    en: "ENGLISH",
+    es: "SPANISH",
+    de: "GERMAN",
+  };
+
   const handleSendLink = async () => {
     setError("");
     setSuccess("");
@@ -45,7 +52,7 @@ function RecoverPassword() {
 
     setLoading(true);
     try {
-      const params = new URLSearchParams({ email });
+      const params = new URLSearchParams({ email, lang: languageMap[i18n.language] || "ENGLISH" });
       const response = await fetch(`${RECOVER_PASSWORD}?${params.toString()}`, {
         method: "POST",
         headers: {
