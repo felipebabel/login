@@ -59,23 +59,22 @@ const SecuritySettings = ({ t, userIdentifier, userName }) => {
     try {
       setPasswordLoading(true);
 
-      const params = new URLSearchParams({ user: userName, newPassword });
+      const payload = { user: userName, newPassword };
 
-      const urlWithParams = `${RESET_PASSWORD}?${params.toString()}`;
-
-      const response = await authService.apiClient(urlWithParams, {
+      const response = await authService.apiClient(RESET_PASSWORD, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
       });
 
       if (response.status === 204) {
         setShowChangePasswordModal(false);
         setCustomAlert({
           show: true,
-          message: t("passwordChangedSuccess")
+          message: t("resetPassword.success")
         });
       } else if (response.status === 400) {
-        setError(t("passwordCannotBeTheSame"));
+        setError(t("resetPassword.errorSamePassword"));
       } else {
         setError(t("errorServer"));
 

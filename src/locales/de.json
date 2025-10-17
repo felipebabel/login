@@ -1,4 +1,8 @@
 {
+  "auth": {
+    "sessionExpiredOrUnauthorized": "Sitzung abgelaufen oder unbefugter Zugriff. Bitte melden Sie sich erneut an.",
+    "accessDenied": "Zugriff verweigert. Sie haben keine Berechtigung, auf diese Seite zuzugreifen."
+  },
   "loginTitle": "Anmelden",
   "userPlaceholder": "Benutzer",
   "username": "Benutzername",
@@ -129,7 +133,7 @@
     "accountDeniedSuccessfully": "Benutzerkonto erfolgreich abgelehnt.",
     "messageCannotDenyProfile": "Das Benutzerprofil konnte nicht abgelehnt werden.",
     "accountActivatedSuccessfully": "Benutzerkonto erfolgreich aktiviert.",
-    "accountDeletedSuccessfully": "Benutzerkonto erfolgreich gelöscht.",
+    "accountDeletedSuccessfully": "Benutzerkonto erfolgreich gesperrt.",
     "messageCannotInactiveProfile": "Fehler beim Setzen des Kontos auf inaktiv.",
     "accountInactivatedSuccessfully": "Benutzerkonto erfolgreich inaktiviert.",
     "messageCannotBlockProfile": "Fehler beim Sperren des Kontos.",
@@ -265,7 +269,8 @@
     "errorEmpty": "Bitte füllen Sie alle Felder aus.",
     "errorServer": "Ein Fehler ist aufgetreten. Bitte versuchen Sie es später erneut.",
     "copyright": "Copyright © 2025 Felipe Babel. Alle Rechte vorbehalten.",
-    "version": "Version"
+    "version": "Version",
+    "accountBlocked": "Ihr Konto ist gesperrt. Bitte kontaktieren Sie den Administrator."
   },
   "recoverPassword": {
     "title": "Passwort wiederherstellen",

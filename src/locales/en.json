@@ -1,4 +1,8 @@
 {
+  "auth": {
+    "sessionExpiredOrUnauthorized": "Session expired or unauthorized access. Please log in again.",
+    "accessDenied": "Access denied. You do not have permission to access this page."
+  },
   "loginTitle": "Login",
   "userPlaceholder": "User",
   "username": "Username",
@@ -129,7 +133,7 @@
     "accountDeniedSuccessfully": "User account successfully denied.",
     "messageCannotDenyProfile": "Could not deny the user's profile.",
     "accountActivatedSuccessfully": "User account successfully activated.",
-    "accountDeletedSuccessfully": "User account successfully deleted.",
+    "accountDeletedSuccessfully": "User account successfully blocked.",
     "messageCannotInactiveProfile": "Error setting account to inactive status.",
     "accountInactivatedSuccessfully": "User account successfully inactivated.",
     "messageCannotBlockProfile": "Error blocking account.",
@@ -265,7 +269,8 @@
     "errorEmpty": "Please fill in all fields.",
     "errorServer": "An error occurred. Please try again later.",
     "copyright": "Copyright © 2025 Felipe Babel. All Rights Reserved.",
-    "version": "Version"
+    "version": "Version",
+    "accountBlocked": "Your account is blocked. Please contact the administrator."
   },
   "recoverPassword": {
     "title": "Recover Password",

@@ -49,15 +49,14 @@ function ResetPassword() {
     try {
       setLoading(true);
 
-      const params = email
-        ? new URLSearchParams({ email, newPassword })
-        : new URLSearchParams({ user: username, newPassword });
+      const payload = email
+        ? { email, newPassword }
+        : { user: username, newPassword };
 
-      const urlWithParams = `${RESET_PASSWORD}?${params.toString()}`;
-
-      const response = await fetch(urlWithParams, {
+      const response = await fetch(RESET_PASSWORD, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
       });
 
       if (response.status === 204) {

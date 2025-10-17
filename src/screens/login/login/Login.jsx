@@ -9,6 +9,7 @@ import "./login.css";
 import { LOGIN, GET_USER } from "@api/endpoints";
 import LoadingOverlay from "@/components/loading/LoadingOverlay";
 import { authService } from "@/components/auth/AuthService";
+import AlertComponent from "@/components/alert/AlertComponent";
 
 function Login() {
   const [user, setUser] = useState("");
@@ -17,6 +18,7 @@ function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [customAlert, setCustomAlert] = useState({ show: false, message: "" });
 
   const navigate = useNavigate();
   const loginContainerRef = useRef(null);
@@ -54,6 +56,11 @@ function Login() {
         if (errData.message === "Password expired") {
           sessionStorage.setItem("user", JSON.stringify(errData));
           setShowModal(true);
+        } else if (errData.message === "Your account is blocked.") {
+          setCustomAlert({
+            show: true,
+            message: t("login.accountBlocked"),
+          });
         } else {
           setError(t("login.errorInvalid"));
         }
@@ -65,6 +72,7 @@ function Login() {
         token: data.token,
         refreshToken: data.refreshToken,
         expiresIn: data.expiresIn,
+        userRole: data.role,
       });
       localStorage.setItem("jwtToken", data.token);
       const userResponse = await authService.apiClient(`${GET_USER}?username=${user}`);
@@ -107,6 +115,7 @@ function Login() {
 
   return (
     <div className="container">
+      <AlertComponent customAlert={customAlert} setCustomAlert={setCustomAlert} />
       {loading && <LoadingOverlay />}
       <div className="main-wrapper">
         <div className="form-container" ref={loginContainerRef}>

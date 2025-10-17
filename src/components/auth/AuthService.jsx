@@ -1,6 +1,7 @@
-const ACCESS_TOKEN_KEY = "tokenAcesso";
-const REFRESH_TOKEN_KEY = "tokenRenovacao";
-const EXPIRES_IN_KEY = "expiraEm"; 
+const ACCESS_TOKEN_KEY = "accessTokenKey";
+const REFRESH_TOKEN_KEY = "refreshTokenKey";
+const EXPIRES_IN_KEY = "expiresInKey"; 
+const USER_ROLE = "userRole";
 
 import {
   REFRESH,
@@ -8,16 +9,20 @@ import {
 
 class AuthService {
 
-    setTokens(data) {
-        localStorage.setItem(ACCESS_TOKEN_KEY, data.token);
-        localStorage.setItem(REFRESH_TOKEN_KEY, data.refreshToken);
-        localStorage.setItem(EXPIRES_IN_KEY, data.expiresIn);
-    }
+setTokens(data) {
+  localStorage.setItem(ACCESS_TOKEN_KEY, data.token);
+  localStorage.setItem(REFRESH_TOKEN_KEY, data.refreshToken);
+  localStorage.setItem(EXPIRES_IN_KEY, data.expiresIn);
+  localStorage.setItem(USER_ROLE, data.userRole); 
+}
 
     logout() {
         localStorage.removeItem(ACCESS_TOKEN_KEY);
         localStorage.removeItem(REFRESH_TOKEN_KEY);
         localStorage.removeItem(EXPIRES_IN_KEY);
+        localStorage.removeItem(USER_ROLE);
+        localStorage.removeItem("jwtToken");
+
         window.location.href = "/login/"; 
     }
 
@@ -73,20 +78,7 @@ class AuthService {
             } else {
                 return response; 
             }
-        } else if (response.status === 403) {
-            const overlay = document.createElement("div");
-        overlay.style.position = "fixed";
-        overlay.style.top = 0;
-        overlay.style.left = 0;
-        overlay.style.width = "100%";
-        overlay.style.height = "100%";
-        overlay.style.backgroundColor = "black";
-        overlay.style.zIndex = 9999;
-        document.body.appendChild(overlay);
-            alert("Inactive session. Please log in again.");
-            this.logout();
-            return response;
-        }
+        } 
         
         return response;
     }

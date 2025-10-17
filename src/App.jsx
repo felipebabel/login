@@ -9,6 +9,7 @@ import ValidateCodeResetPassword from './screens/login/validateCodeResetPassword
 import ResetPassword from './screens/login/resetPassword/ResetPassword';
 import Modal from "./components/common/Modal";
 import "./styles/base.css";
+import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
 
 import { HashRouter as Router, Routes, Route } from "react-router-dom";
 
@@ -21,12 +22,12 @@ function App() {
       <Routes>
         <Route path="/" element={<Login setModalMessage={setModalMessage} />} />
         <Route path="/register" element={<CreateAccount />} />
-        <Route path="/user-dashboard" element={<UserDashboard />} />
-        <Route path="/admin-dashboard" element={<AdminDashboard />} />
         <Route path="/recover-password" element={<RecoverPassword />} />
         <Route path="/validate-code-password" element={<ValidateCodeResetPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/validate-code-email" element={<ValidateCodeEmailVerification />} />
+        <Route path="/user-dashboard" element={<ProtectedRoute requiredRoles={["ROLE_USER", "ROLE_ANALYST"]}><UserDashboard /></ProtectedRoute>}/>
+        <Route path="/admin-dashboard" element={<ProtectedRoute requiredRoles={["ROLE_ADMIN", "ROLE_ANALYST"]}><AdminDashboard /></ProtectedRoute>}/>
       </Routes>
     </Router>
   );

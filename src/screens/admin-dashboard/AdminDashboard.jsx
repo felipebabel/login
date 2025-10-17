@@ -54,7 +54,7 @@ function AdminDashboard() {
           "Content-Type": "application/json",
         },
       });
-
+      authService.logout();
       navigate("/");
     } catch (error) {
       console.error("Error logging out:", error);

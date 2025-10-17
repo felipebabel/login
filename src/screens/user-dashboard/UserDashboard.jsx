@@ -46,7 +46,7 @@ function UserDashboard() {
           "Content-Type": "application/json",
         },
       });
-
+      authService.logout();
       navigate("/");
     } catch (error) {
       navigate("/");
