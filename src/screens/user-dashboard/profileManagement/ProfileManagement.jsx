@@ -107,7 +107,7 @@ const ProfileManagement = ({ t, setUserIdentifier, setNameDash }) => {
       if (!userName) return;
       try {
         setLoading(true);
-        const response = await authService.apiClient(`${GET_MY_USER_DATA}?username=${userName}`);
+        const response = await authService.apiClient(`${GET_MY_USER_DATA}`);
         if (!response.ok) throw new Error("Failed to fetch user data");
         const data = await response.json();
 

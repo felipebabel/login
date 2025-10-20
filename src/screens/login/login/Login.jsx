@@ -75,7 +75,7 @@ function Login() {
         userRole: data.role,
       });
       localStorage.setItem("jwtToken", data.token);
-      const userResponse = await authService.apiClient(`${GET_MY_USER_DATA}?username=${user}`);
+      const userResponse = await authService.apiClient(`${GET_MY_USER_DATA}`);
 
       const userData = await userResponse.json();
 

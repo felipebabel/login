@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { RESET_PASSWORD, DELETE_USER } from "@api/endpoints";
-import { FaLock, FaEye, FaEyeSlash } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import AlertComponent from '@/components/alert/AlertComponent';
 import "./SecuritySettings.css";

@@ -96,11 +96,7 @@ function AccountsManagement({ t, setCustomAlert, userIdentifier }) {
         direction,
         ...filters
       });
-      const response = await authService.apiClient(`${endpointMap[tab]}?${params.toString()}`, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await authService.apiClient(`${endpointMap[tab]}?${params.toString()}`);
       const data = await response.json();
       setUsersData((prev) => ({ ...prev, [tab]: data.content || [] }));
       setPagination((prev) => ({

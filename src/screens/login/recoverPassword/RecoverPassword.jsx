@@ -13,7 +13,7 @@ function RecoverPassword() {
   const [countdown, setCountdown] = useState(120);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   useEffect(() => {
     let timer;
