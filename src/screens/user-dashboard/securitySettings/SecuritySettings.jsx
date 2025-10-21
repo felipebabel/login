@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { RESET_PASSWORD, DELETE_USER } from "@api/endpoints";
+import { RESET_PASSWORD_ACCOUNT, DELETE_USER } from "@api/endpoints";
 import { useNavigate } from "react-router-dom";
 import AlertComponent from '@/components/alert/AlertComponent';
 import "./SecuritySettings.css";
@@ -60,7 +60,7 @@ const SecuritySettings = ({ t, userIdentifier, userName }) => {
 
       const payload = { user: userName, newPassword };
 
-      const response = await authService.apiClient(RESET_PASSWORD, {
+      const response = await authService.apiClient(RESET_PASSWORD_ACCOUNT, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),

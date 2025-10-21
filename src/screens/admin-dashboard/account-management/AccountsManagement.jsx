@@ -236,8 +236,8 @@ function AccountsManagement({ t, setCustomAlert, userIdentifier }) {
   const handleRightClick = (e, user) => {
     e.preventDefault();
     setContextMenu({
-      x: e.pageX,
-      y: e.pageY,
+      x: e.clientX,
+      y: e.clientY,
       user,
       options: contextMenuOptionsMap[activeTab] || [],
       visible: true,

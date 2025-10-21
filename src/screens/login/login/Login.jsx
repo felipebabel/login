@@ -20,6 +20,10 @@ function Login() {
   const [showModal, setShowModal] = useState(false);
   const [customAlert, setCustomAlert] = useState({ show: false, message: "" });
 
+  const handleBackToLogin = () => {
+    navigate("/");
+  };
+
   const navigate = useNavigate();
   const loginContainerRef = useRef(null);
   const { t } = useTranslation();
@@ -60,6 +64,15 @@ function Login() {
           setCustomAlert({
             show: true,
             message: t("login.accountBlocked"),
+          });
+        } else if (errData.message === "Your account is inactive.") {
+          setCustomAlert({
+            show: true,
+            message: t("modal.messageAccountInactive"),
+            confirmText: t("modal.sendReactivationCodeButton"),
+            cancelText: t("modal.cancelButton"),
+            onConfirm: () => handleBackToLogin(),
+            onCancel: () => handleBackToLogin(),
           });
         } else {
           setError(t("login.errorInvalid"));
