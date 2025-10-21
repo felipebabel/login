@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { FaLock, FaEye, FaEyeSlash } from "react-icons/fa";
-import { RESET_PASSWORD } from "@/api/endpoints";
+import { RESET_PASSWORD_LOGIN } from "@/api/endpoints";
 import LoadingOverlay from "@/components/loading/LoadingOverlay";
 import AlertComponent from "@/components/alert/AlertComponent";
 
@@ -53,7 +53,7 @@ function ResetPassword() {
         ? { email, newPassword }
         : { user: username, newPassword };
 
-      const response = await fetch(RESET_PASSWORD, {
+      const response = await fetch(RESET_PASSWORD_LOGIN, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),

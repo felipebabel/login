@@ -86,7 +86,10 @@
     "confirmDeletionMessage": "Are you sure you want to delete your account?",
     "irreversibleWarning": "This action is irreversible.",
     "yesButton": "Yes, Delete",
-    "noButton": "No, Cancel"
+    "noButton": "No, Cancel",
+    "cancelButton": "Cancel",
+    "sendReactivationCodeButton": "Send reactivation code",
+    "messageAccountInactive" : "Your account is inactive. You can request a reactivation link or go back to login."
   },
   "analystDashboard": {
     "title": "Analyst Dashboard",
