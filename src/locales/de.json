@@ -286,7 +286,8 @@
     "sendButton": "Wiederherstellungslink senden",
     "tokenExpired": "Der Wiederherstellungslink ist abgelaufen.",
     "rememberPassword": "Haben Sie sich an Ihr Passwort erinnert?",
-    "backToLoginButton": "Zurück zur Anmeldung"
+    "backToLoginButton": "Zurück zur Anmeldung",
+    "inactiveTitle": "Konto Inaktiv"
   },
   "resetPassword": {
     "title": "Passwort zurücksetzen",

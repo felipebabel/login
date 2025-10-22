@@ -6,7 +6,7 @@ import "./recoverPassword.css";
 import { RECOVER_PASSWORD } from "@api/endpoints";
 import LoadingOverlay from "@/components/loading/LoadingOverlay";
 
-function RecoverPassword() {
+function RecoverPassword({ isInactive = false }) {
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
@@ -14,6 +14,7 @@ function RecoverPassword() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
+  const title = isInactive ? t("recoverPassword.inactiveTitle") : t("recoverPassword.title");
 
   useEffect(() => {
     let timer;
@@ -71,11 +72,11 @@ function RecoverPassword() {
       }
 
       if (response.status === 204) {
-        navigate("/validate-code-password", { state: { email } });
+        navigate("/validate-code-password", { state: { email, isInactive } });
       } else {
         const data = await response.json();
         if (data?.success) {
-          navigate("/validate-code-password", { state: { email } });
+          navigate("/validate-code-password", { state: { email, isInactive } });
         }
       }
     } catch (err) {
@@ -94,7 +95,7 @@ function RecoverPassword() {
     <div className="main-wrapper">
       {loading && <LoadingOverlay />}
       <div className="form-container">
-        <h2 className="form-title">{t("recoverPassword.title")}</h2>
+        <h2 className="form-title">{title}</h2>
         <form
           onSubmit={(e) => e.preventDefault()}
           onKeyDown={(e) => {
@@ -124,9 +125,16 @@ function RecoverPassword() {
           </button>
         </form>
         <p className="form-link">
-          {t("recoverPassword.rememberPassword")}{" "}
-          <span onClick={handleBackToLogin}>{t("recoverPassword.backToLoginButton")}</span>
+          {isInactive ? (
+            <span onClick={handleBackToLogin}>{t("recoverPassword.backToLoginButton")}</span>
+          ) : (
+            <>
+              {t("recoverPassword.rememberPassword")}{" "}
+              <span onClick={handleBackToLogin}>{t("recoverPassword.backToLoginButton")}</span>
+            </>
+          )}
         </p>
+
       </div>
     </div>
   );

@@ -289,7 +289,8 @@
     "sendButton": "Send Recovery Link",
     "tokenExpired": "The recovery link has expired.",
     "rememberPassword": "Remember your password?",
-    "backToLoginButton": "Back to Login"
+    "backToLoginButton": "Back to Login",
+    "inactiveTitle": "Account Inactive"
   },
   "resetPassword": {
     "title": "Reset Password",

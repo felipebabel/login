@@ -286,7 +286,8 @@
     "sendButton": "Enviar Enlace de Recuperación",
     "tokenExpired": "El enlace de recuperación ha expirado.",
     "rememberPassword": "¿Recordó su contraseña?",
-    "backToLoginButton": "Volver a Iniciar Sesión"
+    "backToLoginButton": "Volver a Iniciar Sesión",
+    "inactiveTitle": "Cuenta Inactiva"
   },
   "resetPassword": {
     "title": "Restablecer Contraseña",
