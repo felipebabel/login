@@ -27,8 +27,6 @@ function Login() {
   const handleAccountInactive = () => {
     navigate("/send-activation-link");
   };
-
-
   const navigate = useNavigate();
   const loginContainerRef = useRef(null);
   const { t } = useTranslation();
