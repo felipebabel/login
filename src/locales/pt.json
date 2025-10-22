@@ -286,7 +286,8 @@
     "sendButton": "Enviar Link de Recuperação",
     "tokenExpired": "O link de recuperação expirou.",
     "rememberPassword": "Lembrou da sua senha?",
-    "backToLoginButton": "Voltar para o Login"
+    "backToLoginButton": "Voltar para o Login",
+    "inactiveTitle": "Conta Inativa"
   },
   "resetPassword": {
     "title": "Redefinir Senha",
