@@ -6,7 +6,7 @@ import { VALIDATE_CODE } from "@api/endpoints";
 import LoadingOverlay from '@/components/loading/LoadingOverlay';
 import { RECOVER_PASSWORD } from "@api/endpoints";
 
-function ValidateCodeResetPassword() {
+function ValidateCodeResetPassword({ isInactive = false }) {
   const [code, setCode] = useState(Array(6).fill(""));
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
@@ -16,6 +16,7 @@ function ValidateCodeResetPassword() {
   const location = useLocation();
   const { t } = useTranslation();
   const [countdown, setCountdown] = useState(0);
+  const isInactiveFromState = location.state?.isInactive ?? isInactive;
 
   const languageMap = {
     pt: "PORTUGUESE",
@@ -190,10 +191,16 @@ function ValidateCodeResetPassword() {
                   : t("validateCodePassword.clickResend")}
               </span>
             </p>
-            <p className="form-link">
-              {t("validateCodePassword.rememberPassword")}{" "}
-              <span onClick={handleBackToLogin}>{t("validateCodePassword.backToLogin")}</span>
-            </p>
+                    <p className="form-link">
+          {isInactiveFromState ? (
+            <span onClick={handleBackToLogin}>{t("recoverPassword.backToLoginButton")}</span>
+          ) : (
+            <>
+              {t("recoverPassword.rememberPassword")}{" "}
+              <span onClick={handleBackToLogin}>{t("recoverPassword.backToLoginButton")}</span>
+            </>
+          )}
+        </p>
           </>
         )}
       </div>

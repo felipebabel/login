@@ -22,12 +22,13 @@ function App() {
       <Routes>
         <Route path="/" element={<Login setModalMessage={setModalMessage} />} />
         <Route path="/register" element={<CreateAccount />} />
-        <Route path="/recover-password" element={<RecoverPassword />} />
+        <Route path="/recover-password" element={<RecoverPassword isInactive={false} />} />
+        <Route path="/send-activation-link" element={<RecoverPassword isInactive={true} />} />
         <Route path="/validate-code-password" element={<ValidateCodeResetPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/validate-code-email" element={<ValidateCodeEmailVerification />} />
-        <Route path="/user-dashboard" element={<ProtectedRoute requiredRoles={["ROLE_USER", "ROLE_ANALYST"]}><UserDashboard /></ProtectedRoute>}/>
-        <Route path="/admin-dashboard" element={<ProtectedRoute requiredRoles={["ROLE_ADMIN", "ROLE_ANALYST"]}><AdminDashboard /></ProtectedRoute>}/>
+        <Route path="/user-dashboard" element={<ProtectedRoute requiredRoles={["ROLE_USER", "ROLE_ANALYST"]}><UserDashboard /></ProtectedRoute>} />
+        <Route path="/admin-dashboard" element={<ProtectedRoute requiredRoles={["ROLE_ADMIN", "ROLE_ANALYST"]}><AdminDashboard /></ProtectedRoute>} />
       </Routes>
     </Router>
   );

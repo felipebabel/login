@@ -24,6 +24,11 @@ function Login() {
     navigate("/");
   };
 
+  const handleAccountInactive = () => {
+    navigate("/send-activation-link");
+  };
+
+
   const navigate = useNavigate();
   const loginContainerRef = useRef(null);
   const { t } = useTranslation();
@@ -71,7 +76,7 @@ function Login() {
             message: t("modal.messageAccountInactive"),
             confirmText: t("modal.sendReactivationCodeButton"),
             cancelText: t("modal.cancelButton"),
-            onConfirm: () => handleBackToLogin(),
+            onConfirm: () => handleAccountInactive(),
             onCancel: () => handleBackToLogin(),
           });
         } else {
