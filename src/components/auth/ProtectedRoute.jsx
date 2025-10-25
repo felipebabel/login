@@ -4,8 +4,8 @@ import { useTranslation } from "react-i18next";
 
 export function ProtectedRoute({ children, requiredRoles }) {
   const { t } = useTranslation();
-  const token = localStorage.getItem("tokenAcesso");
-  const userRole = localStorage.getItem("accessTokenKey");
+  const token = localStorage.getItem("accessTokenKey");
+  const userRole = localStorage.getItem("userRole");
   const location = useLocation();
   const hasShownAlert = useRef(false);
 
