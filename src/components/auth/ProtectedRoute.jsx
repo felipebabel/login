@@ -1,11 +1,11 @@
 import React, { useEffect, useRef } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, Navigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 export function ProtectedRoute({ children, requiredRoles }) {
   const { t } = useTranslation();
-  const token = localStorage.getItem("tokenAcesso");
-  const userRole = localStorage.getItem("accessTokenKey");
+  const token = localStorage.getItem("accessTokenKey");
+  const userRole = localStorage.getItem("userRole");
   const location = useLocation();
   const hasShownAlert = useRef(false);
 
@@ -28,8 +28,7 @@ export function ProtectedRoute({ children, requiredRoles }) {
     if (location.pathname === "/" || location.pathname.startsWith("/login")) {
       return null;
     }
-    window.location.hash = "#/";
-    return null;
+return <Navigate to="/" replace />;
   }
 
   return children;

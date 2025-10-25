@@ -13,7 +13,7 @@ setTokens(data) {
   localStorage.setItem(ACCESS_TOKEN_KEY, data.token);
   localStorage.setItem(REFRESH_TOKEN_KEY, data.refreshToken);
   localStorage.setItem(EXPIRES_IN_KEY, data.expiresIn);
-  localStorage.setItem(USER_ROLE, data.userRole); 
+  localStorage.setItem(USER_ROLE, data.role); 
 }
 
     logout() {
