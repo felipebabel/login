@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, Navigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 export function ProtectedRoute({ children, requiredRoles }) {
@@ -28,8 +28,7 @@ export function ProtectedRoute({ children, requiredRoles }) {
     if (location.pathname === "/" || location.pathname.startsWith("/login")) {
       return null;
     }
-    window.location.hash = "#/";
-    return null;
+return <Navigate to="/" replace />;
   }
 
   return children;
